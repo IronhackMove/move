@@ -25,6 +25,7 @@ var dayInMilliseconds = 1000 * 60 * 60 * 24;
 // SetInterval that will download once a day the dataBase of the Gob
 
 setInterval(() => {
+  
   axios
     .get(
       "https://www.electromaps.com/ejson/puntos_cluster.json?lat_min=-21.575513063103706&lon_min=-20.639870293229592&lat_max=44.58498114533759&lon_max=5.6512646524009824&zoom=17&vehiculos=T&tipos=T&connectors=T&velocidades=T&active_app=0&active_rfid=0&lista=ALL"
