@@ -8,7 +8,24 @@ var map = new mapboxgl.Map({
   zoom: 5
 });
 
+const charactersAPI = new APIHandler("http://localhost:3000");
+
+
 map.on("load", function() {
+
+ charactersAPI.getFullList()
+  .then(geopoints => {
+  
+  var data = {
+    type: 'FeatureCollection',
+    features: [
+      ...geopoints
+    ]
+  }
+
+  console.log(data);
+
+
   
   // Add geolocate control to the map.
   map.addControl(
@@ -27,7 +44,7 @@ map.on("load", function() {
     type: "geojson",
     // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
     // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-    data: url,
+    data: data,
     cluster: true,
     clusterMaxZoom: 14, // Max zoom to cluster points on
     clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -88,22 +105,7 @@ map.on("load", function() {
         "text-anchor": "top"
       }
     });
-  });
-
-  // map.addLayer({
-  //     id: "unclustered-point",
-  //     type: "circle",
-  //     source: "epoints",
-  //     filter: ["!", ["has", "point_count"]],
-  //     paint: {
-  //         "circle-color": "#11b4da",
-  //         "circle-radius": 4,
-  //         "circle-stroke-width": 1,
-  //         "circle-stroke-color": "#fff"
-  //     }
-  // });
-
-  
+  });  
 
   // inspect a cluster on click
   map.on("click", "clusters", function(e) {
@@ -144,4 +146,7 @@ map.on("load", function() {
   map.on("mouseleave", "clusters", function() {
     map.getCanvas().style.cursor = "";
   });
+
+});
+
 });
