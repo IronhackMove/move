@@ -1,0 +1,33 @@
+
+<h2>Signup</h2>
+<br><br>
+<form action="/auth/chargingpoints" method="POST" id="form-container">
+  <h3>Add charging points</h3>
+
+  <label for="address">Address</label>
+  <input id="address" type="text" name="address" placeholder="address">
+
+  <br><br>
+  <label for="Number">Number</label>
+  <input id="Number" type="Number" name="Number" placeholder="Number">
+
+  <br><br>
+  <label for="city">City</label>
+  <input id="city" type="text" name="city" placeholder="city">
+
+  <br><br>
+  <label for="chargingpoints">Chargingpoints</label>
+  <input id="chargingpoints" type="Number" name="chargingpoints" placeholder="chargingpoints">
+
+  <br><br>
+
+  <label for="power">Power</label>
+  <select name" power" required=true>
+    <option selected value="0">KW</option>
+    <option value="1">Normal 3,7kW</option>
+    <option value="1">Fast 7,3kW</option>
+    <option value="2">Very Fast 50kW</option>
+  </select>
+  <br><br>
+
+  <button><a href="/">Finish</a></button>
