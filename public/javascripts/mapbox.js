@@ -34,10 +34,17 @@ map.on("load", function() {
     map.addControl(geolocate);
     map.addControl(direction);
 
-    geolocate.on('geolocate', function(e){
+    geolocate.on("geolocate", function(e) {
       var position = [e.coords.longitude, e.coords.latitude];
-      console.log(position);
-    })
+
+      var targetPoint = turf.point(position);
+      var nearest = turf.nearestPoint(targetPoint, data);
+
+      direction.setOrigin(position);
+      direction.setDestination(nearest.geometry.coordinates);
+
+      console.log(nearest);
+    });
 
     var url = "/api/epoints2.geojson";
     // Add a new source from our GeoJSON data and set the

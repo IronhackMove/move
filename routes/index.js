@@ -2,9 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-
 const Epoint = require("../models/Epoint");
-
 
 // Time for setInterval
 var dayInMilliseconds = 1000 * 60 * 60 * 24;
@@ -20,12 +18,12 @@ setInterval(() => {
       return convertToGeoJSONandSave(response.data);
     })
     .then(geojson => {
-
-        Epoint.create(geojson)
-        .then(points => {console.log(points)})
-        .catch(err => console.log(err))
-     });
-
+      Epoint.create(geojson)
+        .then(points => {
+          console.log(points);
+        })
+        .catch(err => console.log(err));
+    });
 }, dayInMilliseconds);
 
 function convertToGeoJSONandSave(json) {
@@ -35,17 +33,16 @@ function convertToGeoJSONandSave(json) {
     var coordinates = [+json.simple[i].longitud, +json.simple[i].latitud];
 
     geojson.push({
-      type: "Epoints",
-      geometry: {
-         type: "Point", 
-         coordinates: coordinates 
+      type: "Feature",
+      properties: {
+        stationName: json.simple[i].nombre,
+        totalDocks: 5
       },
-        properties: {
-          stationName: json.simple[i].nombre,
-          totalDocks: 5
-        }
+      geometry: {
+        type: "Point",
+        coordinates: coordinates
+      }
     });
-
   }
   return geojson;
 }
