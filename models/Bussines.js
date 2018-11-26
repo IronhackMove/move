@@ -6,7 +6,9 @@ const bussinesSchema = new Schema({
   email: String,
   password: String,
   img: String, 
-  direccition: [{type: Schema.Types.ObjectId, ref: 'Direcction'}]
+  chargingpoints: [{type: Schema.Types.ObjectId, ref: 'chargingpoints'}],
+  
+
 
 }, {
   timestamps: {
