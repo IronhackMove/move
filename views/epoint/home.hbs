@@ -1,4 +1,30 @@
-<section id="mainMap">
-  <button id='nearestButton' class="btn btn-success nearestButton">Nearest Station</button>
-  <div id='map'></div>
-</section>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <h1>MovE</h1>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
+<div id="main">
+  <section id="mainMap">
+    <button id='optionsButton' class="optionsButton btn btn-success" onclick="openNav()">Nearest Station</button>
+    <button id='findme' class="optionsButton btn btn-primary">Find Me</button>
+
+    <div id='map'></div>
+  </section>
+</div>
+
+
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "350px";
+    document.getElementById("main").style.marginLeft = "350px";
+  }
+
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  }
+</script>

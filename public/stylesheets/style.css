@@ -7,15 +7,14 @@ a {
   color: #00B7FF; }
 
 #mainMap {
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-content: center; }
 
 #map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%; }
+  width: 100vw;
+  height: 100vh; }
 
 .marker {
   background-image: url("/images/map/epoint.png");
@@ -25,7 +24,7 @@ a {
   border-radius: 50%;
   cursor: pointer; }
 
-.nearestButton {
+.optionsButton {
   display: absolute;
   z-index: 10;
   color: white; }

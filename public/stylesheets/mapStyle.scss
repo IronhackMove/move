@@ -1,0 +1,135 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+path {
+  pointer-events: none;
+}
+
+#map {
+  position: absolute;
+  top: 51;
+  bottom: 0;
+  width: 100%;
+}
+.leaflet-popup-content .marker-title {
+  font-weight: 400;
+  color: #999;
+  line-height: 1.3em;
+}
+.marker-title span {
+  color: #00704a;
+  font-weight: bold;
+}
+#findme {
+  display: none;
+  background: #00704a;
+}
+#milecount {
+  line-height: 2em;
+  color: #00704a;
+}
+.leaflet-container {
+  cursor: default;
+}
+.leaflet-marker-icon {
+  cursor: default;
+}
+.leaflet-popup-content {
+  padding: 10px;
+}
+.leaflet-marker-icon:active ~ * {
+  pointer-events: none;
+}
+.leaflet-marker-draggable:hover {
+  cursor: -webkit-grab;
+}
+.leaflet-marker-draggable:active {
+  cursor: -webkit-grabbing;
+}
+.blocker {
+  color: #00704a;
+  text-align: center;
+}
+path[stroke-opacity="1"] {
+  stroke-dashoffset: 10000;
+  stroke-dasharray: 10000;
+  -webkit-transition: stroke-dashoffset 6s;
+}
+strong {
+  color: #666;
+}
+.distance-icon {
+  border-radius: 10px;
+  background: #fff;
+  color: #00704a;
+  text-align: center;
+  display: inline-block;
+  border: 2px solid #00704a;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.sidenav h1 {
+  padding: 0px 0px 0px 32px;
+  margin-bottom: 50px;
+  text-decoration: none;
+  font-size: 45px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a {
+  padding: 0px 0px 0px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+.leaflet-top, .leaflet-left {
+  display: none;
+}
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
