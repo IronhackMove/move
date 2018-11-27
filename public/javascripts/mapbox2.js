@@ -13,7 +13,7 @@ var marker = L.marker(new L.LatLng(40.42081487986973, -3.6898612976074223), {
     "marker-symbol": "car",
     "marker-size": "large"
   }),
-  draggable: false,
+  draggable: true,
   zIndexOffset: 999
 });
 
@@ -22,7 +22,7 @@ L.mapbox
   .addTo(map);
 
 var currentPosition;
-var currentRadius = 50;
+var currentRadius = 10;
 
 //Geocoder lookup
 var geocoder = L.mapbox.geocoder("mapbox.places-v1");
@@ -92,6 +92,13 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
     map.setView([e.latlng.lat, e.latlng.lng], 14);
     updateVenues();
   });
+
+  $(document).on('input', '#slider', function(e) {
+    currentRadius = e.target.value;
+    $('.autonomy').html(e.target.value + 'km');
+    updateVenues();
+    console.log(e.target.value);
+});
 
 
 
@@ -178,6 +185,50 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
     // map.removeLayer(markers);
     // map.addLayer(markers);
 
+    document.querySelector('#getme').onclick = function() {
+
+      var startEnd = position.lng + "," + position.lat + ";" + nearest.geometry.coordinates[0] + "," + nearest.geometry.coordinates[1];
+      var directionsAPI = "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" + startEnd + ".json?access_token=" + L.mapbox.accessToken;
+
+      // query for directions and draw the path
+      $.get(directionsAPI, function(data) {
+        var coords = data.routes[0].geometry.coordinates;
+        coords.unshift([position.lng, position.lat]);
+        coords.push([nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]]);
+        var path = turf.linestring(coords, {
+          stroke: "#00704A",
+          "stroke-width": 4,
+          opacity: 1
+        });
+
+        $(".distance-icon").remove();
+        map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
+        window.setTimeout(function() {
+          $("path").css("stroke-dashoffset", 0);
+        }, 400);
+        var duration = parseInt(data.routes[0].duration / 60);
+        if (duration < 100) {
+          L.marker(
+            [
+              coords[parseInt(coords.length * 0.5)][1],
+              coords[parseInt(coords.length * 0.5)][0]
+            ],
+            {
+              icon: L.divIcon({
+                className: "distance-icon",
+                html:
+                  '<strong style="color:#00704A">' +
+                  duration +
+                  '</strong> <span class="micro">min</span>',
+                iconSize: [45, 23]
+              })
+            }
+          ).addTo(map);
+        }
+      });
+    }
+
+
     // hover tooltips and click to zoom/route functionality
     nearest_fc
       .on("mouseover", function(e) {
@@ -236,6 +287,7 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
   updateVenues();
   // });
 });
+
 
 getLocation();
 marker.addTo(map);
