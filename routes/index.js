@@ -36,6 +36,10 @@ function convertToGeoJSONandSave(json) {
       type: "Feature",
       properties: {
         stationName: json.simple[i].nombre,
+        'marker-color': null,
+        'marker-size': null,
+        'marker-symol': null,
+        title: null,
         totalDocks: 5
       },
       geometry: {
@@ -54,3 +58,9 @@ router.get("/", (req, res, next) => {
 });
 
 module.exports = router;
+
+
+// feature.properties["marker-color"] = "#6E6E6E";
+// feature.properties["title"] = '<span>'+mileConvert(distance)+'</span><br>'+feature.properties["street"]+'<br>'+feature.properties["city"]+', '+feature.properties["subcountry"]+' '+feature.properties["country"]+checkPhone(feature.properties["phone"])+'<br><strong>Click for walking route</strong>';
+// feature.properties["marker-size"] = "small";
+// feature.properties["marker-symbol"] = "cafe";
