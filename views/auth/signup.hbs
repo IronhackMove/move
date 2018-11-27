@@ -1,39 +1,90 @@
-<h2>Signup Usuario</h2>
- <br><br>
-<form action="/auth/signup" method="POST" id="form-container">
-  <h3>Register quickly</h3>
-  <button><a href="/auth/car">Login whith Google!</a></button>
-  <br><br><br><br>
+<div class="slider-form">
+  <div class="container slider-one-active">
+    <div class="steps">
+      <div class="step step-one">
+        <div class="liner"></div>
+        <span>Sign in</span>
+      </div>
+      <div class="step step-two">
+        <div class="liner"></div>
+        <span>User</span>
+      </div>
+      <div class="step step-three">
+        <div class="liner"></div>
+        <span>Select your car</span>
+      </div>
+      <div class="step step-four">
+        <div class="liner"></div>
+      <span>Finish</span>
+      </div>
+    </div>
+    <div class="line">
+      <div class="dot-move"></div>
+      <div class="dot zero"></div>
+      <div class="dot center"></div>
+      <div class="dot full"></div>
+    </div>
+    <div class="slider-ctr">
+      <div class="slider">
+        <form class="slider-form slider-one">
+          <h2>Sing up and live the experience</h2>
+          <input type="text" class="name" placeholder="Creat your user">
+          <input type="password" class="password" placeholder="Creat new password">
+           <br>
+            {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
+          <button class="first next">Next Step</button>
+          <p class="account-message">
+          Do you already have an account?
+          <a href="/auth/login">Login</a>
+        </form>
+        <form class="slider-form slider-two">
+          <h2>Select your identity</h2>
+          <div class="label-ctr">
+            <button class="second next">I'have a Car</button>
+            <button class="third next">Charging point</button>
+          </div>
+        </form>
+        <div class="slider-form slider-three">
+          <h2>Hello, <span class="yourname"></span></h2>
+          <input type="text" class="name" placeholder="What's your name?">
+          <select type="select" class="mixin.blocks" required=true>
+            <option value="1">Tesla</option>
+            <option value="2">Mercedes</option>
+            <option value="3">BMW</option>
+            <option value="4">Audi</option>
+            <option value="5">BYD</option>
+            <option value="6">Hyundai</option>
+            <option value="7">Jaguar</option>
+            <option value="8">Nissan</option>
+            <option value="9">Opel</option>
+            <option value="10">Renault</option>
+            <option value="11">Volkswagen</option>
+          </select>
+          <select name" models" required=true>
+            <option selected value="0">Select an Models</option>
+            <option value="1">Tesla Model X</option>
+            <option value="2">Tesla Model 3</option>
+            <option value="3">Tesla Model S</option>
+            <option value="4">Mercedes eq</option>
+            <option value="5">BMW i8</option>
+            <option value="6">BMW i3</option>
+            <option value="7">Audi e-tron</option>
+            <option value="8">Hyundai Kona</option>
+            <option value="9">Hyundai Ioniq</option>
+            <option value="10">Jaguar I-Pace</option>
+            <option value="11">Nissan LEAF</option>
+            <option value="11">Opel Ampera-e</option>
+          </select>
+          <input type="number" class="name" placeholder="KW">
 
-  <label for="username">Username</label>
-  <input id="username" type="text" name="username" placeholder="Username">
+            </h3>
+          <a class="reset" href="https://codepen.io/balapa/pen/XbXVRg" target="_blank">Reset</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <br><br>
-
-  <label for="username">Email</label>
-  <input type="email" name="user_email" placeholder="Add your eMail" required=true>
-  <br><br>
-
-  <label for="password">Password</label>
-  <input id="password" type="password" name="password" placeholder="Creat new password" required=true>
-  <br>
-  {{#if message }}
-  <div class="error-message">{{ message }}</div>
-  {{/if}}
-
-  <br>
-
-  <button><a href="/auth/car">GO!</a></button>
-
-    <br><br><br><br>
-
-  <p class="account-message">
-    Do you already have an account?
-    <a href="/auth/login">Login</a>
-  </p>
-  <p class="account-message">
-    If you whant insert one charging point
-    <a href="/auth/signupbussines">Sing in here</a>
-  </p>
-
-</form>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/contact.js"></script>
+</div>
