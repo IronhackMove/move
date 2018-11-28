@@ -73,7 +73,7 @@ var marker = L.marker(new L.LatLng(47.615,-122.34), {
 });
 
 var currentPosition;
-var currentRadius =1;
+var currentRadius =100;
 
 //Geocoder lookup
 var geocoder = L.mapbox.geocoder('mapbox.places-v1');
@@ -121,7 +121,7 @@ $.get('test.geojson', function(data){
     //click-move functionality
     map.on('click',function(e){
         marker.setLatLng([e.latlng.lat, e.latlng.lng]);
-        map.setView([e.latlng.lat, e.latlng.lng],14);
+        map.setView([e.latlng.lat, e.latlng.lng],0);
         updateVenues();
     });
 
@@ -192,6 +192,7 @@ $.get('test.geojson', function(data){
 
     // get position, get radius, draw buffer, find within, calculate distances, find nearest, add to map
     function updateVenues(){
+
         $('path').remove();
         $('.leaflet-marker-pane *').not(':first').remove();
         var position=marker.getLatLng();
@@ -229,6 +230,7 @@ $.get('test.geojson', function(data){
                 return ''}
         }
         within.features.forEach(function(feature){
+
             var distance = parseFloat(turf.distance(point, feature, 'miles'));
             feature.properties["marker-color"] = "#6E6E6E";
             feature.properties["title"] = '<span>'+mileConvert(distance)+'</span><br>'+feature.properties["street"]+'<br>'+feature.properties["city"]+', '+feature.properties["subcountry"]+' '+feature.properties["country"]+checkPhone(feature.properties["phone"])+'<br><strong>Click for walking route</strong>';

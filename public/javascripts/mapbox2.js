@@ -1,3 +1,9 @@
+$("#inputs").hide();
+
+document.getElementById("route").onclick = function() {
+  $("#inputs").slideToggle("slow");
+};
+
 L.mapbox.accessToken =
   "pk.eyJ1IjoiYXNvbGVycCIsImEiOiJjam92ejA2ZGYxbWJrM3dwaDA4YmY1eDA2In0.dhk_MNpNlTqubZiObpTOtg";
 
@@ -5,6 +11,8 @@ var map = L.mapbox
   .map("map")
   .setView([40.42081487986973, -3.6898612976074223], 14);
 
+var nearest;
+var bufferLayer;
 
 var marker = L.marker(new L.LatLng(40.42081487986973, -3.6898612976074223), {
   icon: L.mapbox.marker.icon({
@@ -17,12 +25,14 @@ var marker = L.marker(new L.LatLng(40.42081487986973, -3.6898612976074223), {
   zIndexOffset: 999
 });
 
+map.attributionControl.setPosition("bottomleft");
+
 L.mapbox
   .styleLayer("mapbox://styles/asolerp/cjow223sd3g1j2smcqo2im6as")
   .addTo(map);
 
 var currentPosition;
-var currentRadius = 10;
+var currentRadius = 50;
 
 //Geocoder lookup
 var geocoder = L.mapbox.geocoder("mapbox.places-v1");
@@ -34,6 +44,7 @@ function getLocation() {
   }
 }
 
+// findme
 function showPosition(position) {
   $("#findme").show();
   currentPosition = [position.coords.latitude, position.coords.longitude];
@@ -41,7 +52,6 @@ function showPosition(position) {
 }
 
 function pointBuffer(pt, radius, units, resolution) {
-
   var ring = [];
   var resMultiple = 360 / resolution;
   for (var i = 0; i < resolution; i++) {
@@ -57,16 +67,15 @@ function pointBuffer(pt, radius, units, resolution) {
   return turf.polygon([ring]);
 }
 
-
-// L.mapbox.featureLayer('http://localhost:3000/epoint/getPointsOfCharge').on('ready', function(e) {
-//   var clusterGroup = new L.MarkerClusterGroup();
-//   e.target.eachLayer(function(layer) {
-//       clusterGroup.addLayer(layer);
-//   });
-//   map.addLayer(clusterGroup);
-// });
-
 axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
+
+  var markers = new L.MarkerClusterGroup();
+  var clusterGroup = new L.MarkerClusterGroup();
+
+  map.removeLayer(markers);
+  map.removeLayer(clusterGroup);
+
+  markers.clearLayers();
 
   var data = {
     type: "FeatureCollection",
@@ -76,36 +85,193 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
   $(".blocker").remove();
   $("#topbar").show();
 
-  // var fc = (data);
-  // var fc = JSON.parse(data);
-
   //find me functionality
   $("#findme").on("click", function() {
+    clearAllData();
     marker.setLatLng(currentPosition);
     map.setView(currentPosition, 14);
+    addAllData();
     updateVenues();
   });
 
-  //click-move functionality
-  map.on("click", function(e) {
-    marker.setLatLng([e.latlng.lat, e.latlng.lng]);
-    map.setView([e.latlng.lat, e.latlng.lng], 14);
-    updateVenues();
-  });
-
-  $(document).on('input', '#slider', function(e) {
+  $(document).on("input", "#slider", function(e) {
     currentRadius = e.target.value;
-    $('.autonomy').html(e.target.value + 'km');
+    $(".autonomy").html(e.target.value + "km");
     updateVenues();
     console.log(e.target.value);
-});
+  });
 
+  function showCluster(resultFilter, nearestPoint) {
+    for (var i = 0; i < resultFilter.features.length; i++) {
+      var a = resultFilter.features[i];
 
+      if (
+        a.geometry.coordinates[1] === nearestPoint.geometry.coordinates[1] &&
+        a.geometry.coordinates[0] === nearestPoint.geometry.coordinates[0]
+      ) {
+        var title = a.properties.stationName;
+        var marker2 = L.marker(
+          new L.LatLng(a.geometry.coordinates[1], a.geometry.coordinates[0]),
+          {
+            icon: L.mapbox.marker.icon({
+              "marker-symbol": "car",
+              "marker-color": "#00704A",
+              "marker-size": "medium"
+            }),
+            title: title
+          }
+        );
+        marker2.bindPopup(title);
+        markers.addLayer(marker2);
+      } else {
+        var title = a.properties.stationName;
+        var marker2 = L.marker(
+          new L.LatLng(a.geometry.coordinates[1], a.geometry.coordinates[0]),
+          {
+            icon: L.mapbox.marker.icon({
+              "marker-symbol": "car",
+              "marker-color": "#6E6E6E"
+            }),
+            title: title
+          }
+        );
+        marker2.bindPopup(title);
+        markers.addLayer(marker2);
+      }
+      map.addLayer(markers);
+    }
+  }
 
+  function getPosition() {
+    return marker.getLatLng();
+  }
+
+  function addDirection(start, end) {
+    clearAllData();
+
+    Promise.all([
+      axios.get(
+        `https://api.tiles.mapbox.com/geocoding/v5/mapbox.places/${start}` +
+          ".json?access_token=" +
+          L.mapbox.accessToken
+      ),
+      axios.get(
+        `https://api.tiles.mapbox.com/geocoding/v5/mapbox.places/${end}` +
+          ".json?access_token=" +
+          L.mapbox.accessToken
+      )
+    ]).then(([start, end]) => {
+      console.log(start.data);
+      console.log(end.data);
+      positionFromTo(
+        start.data.features[0].center,
+        end.data.features[0].center
+      );
+    });
+  }
+
+  function positionFromTo(from, to) {
+    // assemble directions URL based on position of user and selected cafe
+    var startEnd = from[0] + "," + from[1] + ";" + to[0] + "," + to[1];
+    console.log(startEnd);
+    var directionsAPI =
+      "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
+      startEnd +
+      ".json?access_token=" +
+      L.mapbox.accessToken;
+
+    // query for directions and draw the path
+    $.get(directionsAPI, function(dataInfo) {
+      var coords = dataInfo.routes[0].geometry.coordinates;
+      coords.unshift([from[0], from[1]]);
+      coords.push([to[0], to[1]]);
+      var path = turf.linestring(coords, {
+        stroke: "#00704A",
+        "stroke-width": 4,
+        opacity: 1
+      });
+
+      console.log(path);
+
+      var radius = 5;
+      for (var i = 0; i < path.geometry.coordinates.length; i += 50) {
+        console.log(path.geometry.coordinates[i][1]);
+
+        var point = turf.point(
+          path.geometry.coordinates[i][0],
+          path.geometry.coordinates[i][1]
+        );
+
+        var within = turf.featurecollection(
+          data.features.filter(function(epoint) {
+            if (turf.distance(epoint, point, "kilometers") <= radius)
+              return true;
+          })
+        );
+
+        console.log(within);
+
+        within.features.forEach(function(feature) {
+          var distance = parseFloat(
+            turf.distance(point, feature, "kilometers")
+          );
+          feature.properties["marker-color"] = "#6E6E6E";
+          feature.properties["title"] = feature.properties["stationName"];
+          feature.properties["marker-size"] = "small";
+          feature.properties["marker-symbol"] = "car";
+        });
+
+        nearest = turf.nearest(point, data);
+        var nearestdist = parseFloat(
+          turf.distance(point, nearest, "kilometeres")
+        );
+
+        nearest.properties["marker-color"] = "#00704A";
+        nearest.properties["title"] =
+          +nearestdist + "" + nearest.properties["stationName"];
+        nearest.properties["marker-size"] = "medium";
+        nearest.properties["marker-symbol"] = "car";
+
+        showCluster(within, nearest);
+      }
+
+      $(".distance-icon").remove();
+      map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
+
+      window.setTimeout(function() {
+        $("path").css("stroke-dashoffset", 0);
+      }, 400);
+
+      var duration = parseInt(data.routes[0].duration / 60);
+      if (duration < 100) {
+        L.marker(
+          [
+            coords[parseInt(coords.length * 0.5)][1],
+            coords[parseInt(coords.length * 0.5)][0]
+          ],
+          {
+            icon: L.divIcon({
+              className: "distance-icon",
+              html:
+                '<strong style="color:#00704A">' +
+                duration +
+                '</strong> <span class="micro">min</span>',
+              iconSize: [45, 23]
+            })
+          }
+        ).addTo(map);
+      }
+    });
+  }
 
   // get position, get radius, draw buffer, find within, calculate distances, find nearest, add to map
   function updateVenues() {
-    
+    map.removeLayer(markers);
+    markers.clearLayers();
+
+    map.removeLayer(clusterGroup);
+    clusterGroup.clearLayers();
+
     $("path").remove();
     $(".leaflet-marker-pane *")
       .not(":first")
@@ -114,7 +280,7 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
     var point = turf.point(position.lng, position.lat);
 
     //draw buffer
-    var bufferLayer = L.mapbox.featureLayer().addTo(map);
+    bufferLayer = L.mapbox.featureLayer().addTo(map);
     var buffer = pointBuffer(point, currentRadius, "kilometers", 120);
     buffer.properties = {
       fill: "#00704A",
@@ -135,14 +301,6 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
 
     $("#milecount").html(within.features.length);
 
-    // function mileConvert(miles) {
-    //   if (miles <= 0.25) {
-    //     return (miles * 5280).toFixed(0) + " ft";
-    //   } else {
-    //     return miles.toFixed(2) + " mi";
-    //   }
-    // }
-
     within.features.forEach(function(feature) {
       var distance = parseFloat(turf.distance(point, feature, "kilometers"));
       feature.properties["marker-color"] = "#6E6E6E";
@@ -151,55 +309,77 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
       feature.properties["marker-symbol"] = "car";
     });
 
-    var nearest = turf.nearest(point, data);
+    nearest = turf.nearest(point, data);
     var nearestdist = parseFloat(turf.distance(point, nearest, "kilometeres"));
 
     nearest.properties["marker-color"] = "#00704A";
-    nearest.properties["title"] = + nearestdist+ '' + nearest.properties["stationName"];
+    nearest.properties["title"] =
+      +nearestdist + "" + nearest.properties["stationName"];
     nearest.properties["marker-size"] = "medium";
     nearest.properties["marker-symbol"] = "car";
 
-    var nearest_fc = L.mapbox
-      .featureLayer()
-      .setGeoJSON(turf.featurecollection([within, nearest]))
-      .addTo(map);
+    showCluster(within, nearest);
+  }
 
+  function clearAllData() {
+  
+    map.removeLayer(bufferLayer);
+    map.removeLayer(markers);
+    markers.clearLayers();
+    map.removeLayer(clusterGroup);
+    clusterGroup.clearLayers();
 
-    // var markers = new L.MarkerClusterGroup();
+    $("path").remove();
+    $(".leaflet-marker-pane *")
+      .not(":first")
+      .remove();
+  }
 
-    // console.log(turf.featurecollection([within, nearest]).features[0].features.length);
+  function addAllData() {
+    map.addLayer(bufferLayer);
+    map.addLayer(markers);
+    map.addLayer(marker);
+  }
 
-    // for (var i = 0; i < turf.featurecollection([within, nearest]).features[0].features.length; i++) {
-    //     var a = turf.featurecollection([within, nearest]).features[0].features[i];
-    //     console.log(a.geometry.coordinates[0]);
-    //     var title = a.properties.stationName;
-       
-    //     var marker2 = L.marker(new L.LatLng(a.geometry.coordinates[1], a.geometry.coordinates[0]), {
-    //         icon: L.mapbox.marker.icon({'marker-symbol': 'car', 'marker-color': '6E6E6E'}),
-    //         title: title
-    //     });
-    //     marker2.bindPopup(title);
-    //     markers.addLayer(marker2);
-    // }
-
-    // map.removeLayer(markers);
-    // map.addLayer(markers);
-
-    document.querySelector('#getme').onclick = function() {
-
-      var startEnd = position.lng + "," + position.lat + ";" + nearest.geometry.coordinates[0] + "," + nearest.geometry.coordinates[1];
-      var directionsAPI = "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" + startEnd + ".json?access_token=" + L.mapbox.accessToken;
+  // hover tooltips and click to zoom/route functionality
+  markers
+    .on("mouseover", function(e) {
+      e.layer.openPopup();
+    })
+    .on("mouseout", function(e) {
+      e.layer.closePopup();
+    })
+    .on("click", function(e) {
+      console.log(e);
+      var position = getPosition();
+      // assemble directions URL based on position of user and selected cafe
+      var startEnd =
+        position.lng +
+        "," +
+        position.lat +
+        ";" +
+        e.latlng.lng +
+        "," +
+        e.latlng.lat;
+      console.log(startEnd);
+      var directionsAPI =
+        "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
+        startEnd +
+        ".json?access_token=" +
+        L.mapbox.accessToken;
 
       // query for directions and draw the path
       $.get(directionsAPI, function(data) {
         var coords = data.routes[0].geometry.coordinates;
         coords.unshift([position.lng, position.lat]);
-        coords.push([nearest.geometry.coordinates[0], nearest.geometry.coordinates[1]]);
+        coords.push([e.latlng.lng, e.latlng.lat]);
         var path = turf.linestring(coords, {
           stroke: "#00704A",
           "stroke-width": 4,
           opacity: 1
         });
+
+        console.log(path);
 
         $(".distance-icon").remove();
         map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
@@ -226,68 +406,133 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
           ).addTo(map);
         }
       });
-    }
+    });
 
-
-    // hover tooltips and click to zoom/route functionality
-    nearest_fc
-      .on("mouseover", function(e) {
-        e.layer.openPopup();
-      })
-      .on("mouseout", function(e) {
-        e.layer.closePopup();
-      })
-      .on("click", function(e) {
-        console.log(e);
-        // assemble directions URL based on position of user and selected cafe
-        var startEnd = position.lng + "," + position.lat + ";" + e.latlng.lng + "," + e.latlng.lat;
-        var directionsAPI = "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" + startEnd + ".json?access_token=" + L.mapbox.accessToken;
-
-        // query for directions and draw the path
-        $.get(directionsAPI, function(data) {
-          var coords = data.routes[0].geometry.coordinates;
-          coords.unshift([position.lng, position.lat]);
-          coords.push([e.latlng.lng, e.latlng.lat]);
-          var path = turf.linestring(coords, {
-            stroke: "#00704A",
-            "stroke-width": 4,
-            opacity: 1
-          });
-
-          $(".distance-icon").remove();
-          map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
-          window.setTimeout(function() {
-            $("path").css("stroke-dashoffset", 0);
-          }, 400);
-          var duration = parseInt(data.routes[0].duration / 60);
-          if (duration < 100) {
-            L.marker(
-              [
-                coords[parseInt(coords.length * 0.5)][1],
-                coords[parseInt(coords.length * 0.5)][0]
-              ],
-              {
-                icon: L.divIcon({
-                  className: "distance-icon",
-                  html:
-                    '<strong style="color:#00704A">' +
-                    duration +
-                    '</strong> <span class="micro">min</span>',
-                  iconSize: [45, 23]
-                })
-              }
-            ).addTo(map);
-          }
-        });
-      });
-  }
   marker.on("drag", function() {
     updateVenues();
   });
   updateVenues();
+
+  document.querySelector("#getme").onclick = function() {
+    var position = getPosition();
+    // assemble directions URL based on position of user and selected cafe
+    var startEnd =
+      position.lng +
+      "," +
+      position.lat +
+      ";" +
+      nearest.geometry.coordinates[0] +
+      "," +
+      nearest.geometry.coordinates[1];
+    console.log(startEnd);
+    var directionsAPI =
+      "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
+      startEnd +
+      ".json?access_token=" +
+      L.mapbox.accessToken;
+
+    // query for directions and draw the path
+    $.get(directionsAPI, function(data) {
+      var coords = data.routes[0].geometry.coordinates;
+      coords.unshift([position.lng, position.lat]);
+      coords.push([
+        nearest.geometry.coordinates[0],
+        nearest.geometry.coordinates[1]
+      ]);
+      var path = turf.linestring(coords, {
+        stroke: "#00704A",
+        "stroke-width": 4,
+        opacity: 1
+      });
+
+      $(".distance-icon").remove();
+      map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
+      window.setTimeout(function() {
+        $("path").css("stroke-dashoffset", 0);
+      }, 400);
+      var duration = parseInt(data.routes[0].duration / 60);
+      if (duration < 100) {
+        L.marker(
+          [
+            coords[parseInt(coords.length * 0.5)][1],
+            coords[parseInt(coords.length * 0.5)][0]
+          ],
+          {
+            icon: L.divIcon({
+              className: "distance-icon",
+              html:
+                '<strong style="color:#00704A">' +
+                duration +
+                '</strong> <span class="micro">min</span>',
+              iconSize: [45, 23]
+            })
+          }
+        ).addTo(map);
+      }
+    });
+  };
+
+  document.querySelector("#allData").onclick = function() {
+    // map.clearLayers();
+
+    L.mapbox
+      .featureLayer("http://localhost:3000/epoint/getPointsOfCharge")
+      .on("ready", function(e) {
+        // The clusterGroup gets each marker in the group added to it
+        // once loaded, and then is added to the map
+
+        e.target.eachLayer(function(layer) {
+          var title = layer.feature.properties.stationName;
+          var marker2 = L.marker(
+            new L.LatLng(
+              layer.feature.geometry.coordinates[1],
+              layer.feature.geometry.coordinates[0]
+            ),
+            {
+              icon: L.mapbox.marker.icon({
+                "marker-symbol": "car",
+                "marker-color": "#6E6E6E"
+              }),
+              title: title
+            }
+          );
+          marker2.bindPopup(title);
+          clusterGroup.addLayer(marker2);
+        });
+      });
+    
+    map.removeLayer(marker);
+    map.removeLayer(bufferLayer);
+    map.addLayer(clusterGroup);
+  };
+
+  // document.querySelector("#routePlan").onclick = function() {
+  //   clearAllData();
+  // };
+
+  // document.querySelector("#addData").onclick = function() {
+  //   addAllData();
+  // };
+
+  document.querySelector("#createRoute").onclick = function(e) {
+    console.log(
+      document.getElementById("mapbox-directions-origin-input").value
+    );
+    // clearAllData();
+
+    addDirection(
+      document.getElementById("mapbox-directions-origin-input").value,
+      document.getElementById("mapbox-directions-destination-input").value
+    );
+  };
+
+  $(document).on("input", "#slider", function(e) {
+    console.log(e);
+    // document.getElementById('autonomy').innerHTML = 'hola';
+  });
+
   // });
 });
-
 
 getLocation();
 marker.addTo(map);

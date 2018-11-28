@@ -1,29 +1,43 @@
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <h1>MovE</h1>
-  <a href="#" id="getme">Get me nearest station!</a>
-  <input type="range" id="slider" class="custom-range" value="10" min="1" max="20" step="0.1" />
-  <span class="autonomy"></span>
-</div>
+<section id="mainMap">
 
-<div id="main">
-  <section id="mainMap">
-    <button id='optionsButton' class="optionsButton btn btn-success" onclick="openNav()">Nearest Station</button>
-    <button id='findme' class="optionsButton btn btn-primary">Find Me</button>
-
+  <div id="container">
     <div id='map'></div>
-  </section>
-</div>
+  </div>
+
+  <div id="right">
+
+    <h1 class="titleApp">MovE</h1>
+    <div class="nav-right-buttons">
+      <button id="findme" class="btn btn-outline-info btn-lg btn-block"><i class="fas fa-map-marked-alt"></i> Find my Car!</button>
+      <button id="getme" class="btn btn-outline-success btn-lg btn-block"><i class="fas fa-charging-station"></i> Nearest station!</button>
+      <button id="route" class="btn btn-outline-warning btn-lg btn-block"><i class="fas fa-route"></i> Create Route</button>
+      <button id="allData" class="btn btn-outline-danger btn-lg btn-block"><i class="fas fa-route"></i> Show All data</button>
+    </div>
+
+    {{!-- <a href="#" id="routePlan">Clear Data</a>
+    <a href="#" id="addData">Add data</a> --}}
+
+    <div id="inputs" class="mapbox-directions-inputs">
+     
+        <div class="mapbox-directions-origin"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-depart-icon"></span></label>
+          <input type="text" required="required" id="mapbox-directions-origin-input" placeholder="Start">
+          <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
+        </div>
+        <div class="mapbox-directions-destination"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-arrive-icon"></span></label><input
+            type="text" required="required" id="mapbox-directions-destination-input" placeholder="End">
+          <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
+        </div>
+          <button id="createRoute" class="btn btn-outline-success btn-lg btn-block">Search</button> 
+   
+    </div>
+
+    <div id="value">
+      <h1 class="autonomy">50 Km</h1>
+    </div>
+
+    <input id="slider" type="range" min="0" max="100" step="0.5" value="50">
+
+  </div>
 
 
-<script>
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "350px";
-    document.getElementById("main").style.marginLeft = "350px";
-  }
-
-  function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-  }
-</script>
+</section>
