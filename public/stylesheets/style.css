@@ -1,2 +1,84 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+a {
+  color: #00b7ff; }
+
+#mainMap {
+  overflow: hidden;
+  display: flex;
+  justify-content: flow;
+  align-content: center;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+#container {
+  width: 80vw;
+  height: 100vh; }
+
+#map {
+  width: 100%;
+  height: 100vh;
+  position: relative; }
+
+#inputs {
+  margin-top: 20px; }
+
+.mapbox-directions-origin, .mapbox-directions-destination {
+  margin-bottom: 10px;
+  border-radius: 10px; }
+
+.mapbox-directions-origin, .mapbox-directions-destination {
+  color: white;
+  background: rgba(255, 255, 255, 0); }
+
+#createRoute {
+  margin-top: 10px; }
+
+#right {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 20vw;
+  height: 100vh; }
+
+.titleApp {
+  font-size: 100px; }
+
+.nav-right-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 50px; }
+
+.nav-right-buttons button {
+  display: inline-block;
+  border-radius: 60px;
+  box-shadow: 0px 0px 2px #888;
+  padding: 0.5em 0.6em; }
+
+.marker {
+  background-image: url("/images/map/epoint.png");
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer; }
+
+.optionsButton {
+  display: absolute;
+  z-index: 10;
+  color: white; }
+
+.round {
+  border-radius: 50%; }
+
+.mapbox-directions-inputs input {
+  font-size: 20px; }
 
 /*# sourceMappingURL=style.css.map */

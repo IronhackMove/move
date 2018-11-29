@@ -2,7 +2,6 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
 
-  
   },
   false
 );

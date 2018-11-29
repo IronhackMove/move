@@ -8,155 +8,170 @@ var map = new mapboxgl.Map({
   zoom: 5
 });
 
-const charactersAPI = new APIHandler("http://localhost:3000");
+var currentPosition;
 
-map.on("load", function() {
-  charactersAPI.getFullList().then(geopoints => {
-    var data = {
-      type: "FeatureCollection",
-      features: [...geopoints]
-    };
+var geo = new mapboxgl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true
+})
 
-    console.log(data);
+map.addControl(geo);
 
-    // Add geolocate control to the map.
-    var geolocate = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    });
 
-    var direction = new MapboxDirections({
-      accessToken: mapboxgl.accessToken
-    });
 
-    map.addControl(geolocate);
-    map.addControl(direction);
+// const charactersAPI = new APIHandler("http://localhost:3000");
 
-    geolocate.on("geolocate", function(e) {
-      var position = [e.coords.longitude, e.coords.latitude];
+// map.on("load", function() {
+//   charactersAPI.getFullList().then(geopoints => {
+//     var data = {
+//       type: "FeatureCollection",
+//       features: [...geopoints]
+//     };
+    
 
-      var targetPoint = turf.point(position);
-      var nearest = turf.nearestPoint(targetPoint, data);
+//     // Add geolocate control to the map.
+//     var geolocate = new mapboxgl.GeolocateControl({
+//       positionOptions: {
+//         enableHighAccuracy: true
+//       },
+//       trackUserLocation: true
+//     });
 
-      direction.setOrigin(position);
-      direction.setDestination(nearest.geometry.coordinates);
+//     var direction = new MapboxDirections({
+//       accessToken: mapboxgl.accessToken
+//     });
 
-      console.log(nearest);
-    });
+//     map.addControl(geolocate);
+//     // map.addControl(direction);
 
-    var url = "/api/epoints2.geojson";
-    // Add a new source from our GeoJSON data and set the
-    // 'cluster' option to true. GL-JS will add the point_count property to your source data.
-    map.addSource("epoints", {
-      type: "geojson",
-      // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-      // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-      data: data,
-      cluster: true,
-      clusterMaxZoom: 14, // Max zoom to cluster points on
-      clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
-    });
+//     geolocate.on("geolocate", function(e) {
 
-    console.log(map);
+//       var position = [e.coords.longitude, e.coords.latitude];
 
-    map.addLayer({
-      id: "clusters",
-      type: "circle",
-      source: "epoints",
-      filter: ["has", "point_count"],
-      paint: {
-        // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-        // with three steps to implement three types of circles:
-        //   * Blue, 20px circles when point count is less than 100
-        //   * Yellow, 30px circles when point count is between 100 and 750
-        //   * Pink, 40px circles when point count is greater than or equal to 750
-        "circle-color": [
-          "step",
-          ["get", "point_count"],
-          "#2fefef",
-          20,
-          "#2fefef",
-          40,
-          "#2fefef"
-        ],
-        "circle-radius": ["step", ["get", "point_count"], 15, 20, 15, 40, 15]
-      }
-    });
+//       var targetPoint = turf.point(position);
+//       var nearest = turf.nearestPoint(targetPoint, data);
 
-    map.addLayer({
-      id: "cluster-count",
-      type: "symbol",
-      source: "epoints",
-      filter: ["has", "point_count"],
-      layout: {
-        "text-field": "{point_count_abbreviated}",
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-        "text-size": 12
-      }
-    });
 
-    map.loadImage("/images/map/epint.png", (error, image) => {
-      if (error) throw error;
-      map.addImage("epoint", image);
-      map.addLayer({
-        id: "epoint",
-        type: "symbol",
-        source: "epoints",
-        filter: ["!", ["has", "point_count"]],
-        layout: {
-          "icon-image": "epoint",
-          "icon-size": 0.2,
-          "text-field": "{stationName}",
-          "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-          "text-offset": [0, 3.2],
-          "text-size": 10,
-          "text-anchor": "top"
-        }
-      });
-    });
+//       var point = turf.point(position);
+//       var buffer = turf.buffer(point, 200, 'kilometers');
 
-    // inspect a cluster on click
-    map.on("click", "clusters", function(e) {
-      var features = map.queryRenderedFeatures(e.point, {
-        layers: ["clusters"]
-      });
-      var clusterId = features[0].properties.cluster_id;
-      map
-        .getSource("epoints")
-        .getClusterExpansionZoom(clusterId, function(err, zoom) {
-          if (err) return;
+//       // direction.setOrigin(position);
+//       // direction.setDestination(nearest.geometry.coordinates);
 
-          map.easeTo({
-            center: features[0].geometry.coordinates,
-            zoom: zoom
-          });
-        });
-    });
 
-    map.on("click", "epoint", function(e) {
-      var coordinates = e.features[0].geometry.coordinates.slice();
-      var description = e.features[0].properties.totalDocks;
+//     });
 
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      }
+    
+//     map.addSource("epoints", {
+//       type: "geojson",
+//       // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+//       // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+//       data: data,
+//       cluster: true,
+//       clusterMaxZoom: 14, // Max zoom to cluster points on
+//       clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+//     });
 
-      new mapboxgl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(`Number of docks in the station: ${description}`)
-        .addTo(map);
-    });
+//     console.log(map);
 
-    map.on("mouseenter", "clusters", function() {
-      map.getCanvas().style.cursor = "pointer";
-    });
-    map.on("mouseleave", "clusters", function() {
-      map.getCanvas().style.cursor = "";
-    });
-  });
-});
+//     map.addLayer({
+//       id: "clusters",
+//       type: "circle",
+//       source: "epoints",
+//       filter: ["has", "point_count"],
+//       paint: {
+//         // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+//         // with three steps to implement three types of circles:
+//         //   * Blue, 20px circles when point count is less than 100
+//         //   * Yellow, 30px circles when point count is between 100 and 750
+//         //   * Pink, 40px circles when point count is greater than or equal to 750
+//         "circle-color": [
+//           "step",
+//           ["get", "point_count"],
+//           "#2fefef",
+//           20,
+//           "#2fefef",
+//           40,
+//           "#2fefef"
+//         ],
+//         "circle-radius": ["step", ["get", "point_count"], 15, 20, 15, 40, 15]
+//       }
+//     });
+
+//     map.addLayer({
+//       id: "cluster-count",
+//       type: "symbol",
+//       source: "epoints",
+//       filter: ["has", "point_count"],
+//       layout: {
+//         "text-field": "{point_count_abbreviated}",
+//         "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+//         "text-size": 12
+//       }
+//     });
+
+//     map.loadImage("/images/map/epint.png", (error, image) => {
+//       if (error) throw error;
+//       map.addImage("epoint", image);
+//       map.addLayer({
+//         id: "epoint",
+//         type: "symbol",
+//         source: "epoints",
+//         filter: ["!", ["has", "point_count"]],
+//         layout: {
+//           "icon-image": "epoint",
+//           "icon-size": 0.2,
+//           "text-field": "{stationName}",
+//           "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+//           "text-offset": [0, 3.2],
+//           "text-size": 10,
+//           "text-anchor": "top"
+//         }
+//       });
+//     });
+
+//     // inspect a cluster on click
+//     map.on("click", "clusters", function(e) {
+//       var features = map.queryRenderedFeatures(e.point, {
+//         layers: ["clusters"]
+//       });
+//       var clusterId = features[0].properties.cluster_id;
+//       map
+//         .getSource("epoints")
+//         .getClusterExpansionZoom(clusterId, function(err, zoom) {
+//           if (err) return;
+
+//           map.easeTo({
+//             center: features[0].geometry.coordinates,
+//             zoom: zoom
+//           });
+//         });
+//     });
+
+//     map.on("click", "epoint", function(e) {
+//       var coordinates = e.features[0].geometry.coordinates.slice();
+//       var description = e.features[0].properties.totalDocks;
+
+//       // Ensure that if the map is zoomed out such that multiple
+//       // copies of the feature are visible, the popup appears
+//       // over the copy being pointed to.
+//       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+//         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+//       }
+
+//       new mapboxgl.Popup()
+//         .setLngLat(coordinates)
+//         .setHTML(`Number of docks in the station: ${description}`)
+//         .addTo(map);
+//     });
+
+//     map.on("mouseenter", "clusters", function() {
+//       map.getCanvas().style.cursor = "pointer";
+//     });
+//     map.on("mouseleave", "clusters", function() {
+//       map.getCanvas().style.cursor = "";
+//     });
+//   });
+// });
