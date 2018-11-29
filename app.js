@@ -15,7 +15,7 @@ const flash      = require("connect-flash");
     
 
 mongoose
-  .connect('mongodb://localhost/emap', {useNewUrlParser: true})
+  .connect(process.env.MONGO_URL, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -74,6 +74,10 @@ app.use(session({
 app.use(flash());
 require('./passport')(app);
     
+app.use((req, res, next) => {
+  res.locals.tokenMapbox = process.env.MAPBOX
+  next();
+})
 
 const index = require('./routes/index');
 app.use('/', index);
@@ -81,8 +85,8 @@ app.use('/', index);
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
-const appRoutes = require('./routes/epoint');
-app.use('/epoint', appRoutes);
+const appRoutes = require('./routes/move');
+app.use('/move', appRoutes);
       
       
 

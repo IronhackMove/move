@@ -20,6 +20,32 @@ path {
   bottom: 0;
   width: 100%; }
 
+#right {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 20px;
+  width: 25vw;
+  height: 100vh;
+  background: white; }
+
+#right img {
+  margin-top: 40px;
+  height: 110px; }
+
+.right-middle-container {
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center; }
+
+.slider-form {
+  margin-top: 100px; }
+
+#value {
+  margin-top: 100px; }
+
 .leaflet-popup-content .marker-title {
   font-weight: 400;
   color: #999;
@@ -120,10 +146,11 @@ strong {
   margin-left: 50px; }
 
 #main {
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
   padding: 16px; }
 
-.leaflet-top, .leaflet-left {
+.leaflet-top,
+.leaflet-left {
   display: none; }
 
 @media screen and (max-height: 450px) {
@@ -148,9 +175,36 @@ strong {
   font-weight: bold; }
 
 .leaflet-popup-content-wrapper {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.712);
+  box-shadow: 0px 0px 10px grey;
+  border-radius: 10px; }
+
+.leaflet-popup-content {
+  width: 100%; }
+
+.trigger {
+  color: white;
+  background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
+  border: 0px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  width: 100%;
+  font-size: 1.3rem;
+  margin-top: 10px; }
+
+.triggerFavorite {
+  color: #495aff;
   background: white;
   border: 1px solid #495aff;
-  border-radius: 10px; }
+  border-radius: 50px;
+  margin-bottom: 10px;
+  width: 100%;
+  font-size: 1.3rem;
+  margin-top: 10px; }
 
 body {
   background: #ecf0f1;
@@ -168,7 +222,7 @@ body {
   height: 100px;
   line-height: 60px;
   margin: 10px auto;
-  letter-spacing: -.07em;
+  letter-spacing: -0.07em;
   text-shadow: white 2px 2px 2px; }
 
 input[type="range"] {
@@ -189,10 +243,9 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   border: 2px solid white;
   cursor: pointer;
-  transition: .3s ease-in-out; }
+  transition: 0.3s ease-in-out; }
 
-​
-input[type="range"]::-webkit-slider-thumb:hover {
+​ input[type="range"]::-webkit-slider-thumb:hover {
   background-color: white;
   border: 2px solid #e74c3c; }
 

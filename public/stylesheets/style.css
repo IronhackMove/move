@@ -6,6 +6,17 @@ body {
 a {
   color: #00b7ff; }
 
+#signup-page {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/images/backmap.png");
+  background-size: 100%; }
+
+.backgrey {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(128, 128, 128, 0.657); }
+
 #mainMap {
   overflow: hidden;
   display: flex;
@@ -16,7 +27,7 @@ a {
   left: 0; }
 
 #container {
-  width: 80vw;
+  width: 75vw;
   height: 100vh; }
 
 #map {
@@ -37,15 +48,6 @@ a {
 
 #createRoute {
   margin-top: 10px; }
-
-#right {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  width: 20vw;
-  height: 100vh; }
 
 .titleApp {
   font-size: 100px; }

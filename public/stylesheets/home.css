@@ -67,7 +67,11 @@ p{
 
 
 .imgs1 {
+<<<<<<< HEAD
   width: 100vw;
+=======
+  width: 100%;
+>>>>>>> 3353346d3647dd05bcbea57427acf7a75588efd8
   height: 100vh;
   background-image: url(/images/img1.jpg);
   background-repeat: no-repeat;
@@ -91,7 +95,11 @@ p{
   color: white;
 }
 .imgs2 {
+<<<<<<< HEAD
   width: 100vw;
+=======
+  width: 100%;
+>>>>>>> 3353346d3647dd05bcbea57427acf7a75588efd8
   height: 100vh;
   background-image: url(/images/img2.jpg);
   background-repeat: no-repeat;
