@@ -70,7 +70,7 @@ function pointBuffer(pt, radius, units, resolution) {
   return turf.polygon([ring]);
 }
 
-axios.get(`http://mov-e.herokuapp.com/move/getPointsOfCharge`).then(points => {
+axios.get(`https://mov-e.herokuapp.com/move/getPointsOfCharge`).then(points => {
 
   var markers = new L.MarkerClusterGroup();
   var clusterGroup = new L.MarkerClusterGroup();
