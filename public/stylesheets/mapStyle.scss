@@ -147,6 +147,27 @@ body {
   font-size: 20px;
 }
 
+// Popup Style
+.popup-point {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.popup-point h1 {
+  font-weight: bold;
+}
+
+.leaflet-popup-content-wrapper {
+  background: white;
+  border: 1px solid #495aff;
+  border-radius: 10px;
+}
+
+.leaflet-popup-content {
+}
+
+
 // range style
 
 @import url(https://fonts.googleapis.com/css?family=Dosis:700);

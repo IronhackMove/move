@@ -4,6 +4,8 @@ document.getElementById("route").onclick = function() {
   $("#inputs").slideToggle("slow");
 };
 
+var info = document.getElementById("infoEpoint");
+
 L.mapbox.accessToken =
   "pk.eyJ1IjoiYXNvbGVycCIsImEiOiJjam92ejA2ZGYxbWJrM3dwaDA4YmY1eDA2In0.dhk_MNpNlTqubZiObpTOtg";
 
@@ -135,7 +137,10 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
             title: title
           }
         );
-        marker2.bindPopup(title);
+        marker2.bindPopup(`<div class='popup-point'>
+        <h1>${title}</h1>
+        <button class="trigger btn btn-primary btn-block" value=${[a.geometry.coordinates[0], a.geometry.coordinates[1]]}>Get me there!</button>
+        </div>`)
         markers.addLayer(marker2);
       }
       map.addLayer(markers);
@@ -186,12 +191,10 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
       coords.unshift([from[0], from[1]]);
       coords.push([to[0], to[1]]);
       var path = turf.linestring(coords, {
-        stroke: "#00704A",
+        stroke: "#007bff",
         "stroke-width": 4,
         opacity: 1
       });
-
-      console.log(path);
 
       var radius = 5;
       for (var i = 0; i < path.geometry.coordinates.length; i += 50) {
@@ -209,7 +212,6 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
           })
         );
 
-        console.log(within);
 
         within.features.forEach(function(feature) {
           var distance = parseFloat(
@@ -283,9 +285,9 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
     bufferLayer = L.mapbox.featureLayer().addTo(map);
     var buffer = pointBuffer(point, currentRadius, "kilometers", 120);
     buffer.properties = {
-      fill: "#00704A",
+      fill: "#007bff",
       "fill-opacity": 0.05,
-      stroke: "#00704A",
+      stroke: "#007bff",
       "stroke-width": 2,
       "stroke-opacity": 0.5
     };
@@ -322,7 +324,6 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
   }
 
   function clearAllData() {
-  
     map.removeLayer(bufferLayer);
     map.removeLayer(markers);
     markers.clearLayers();
@@ -343,69 +344,76 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
 
   // hover tooltips and click to zoom/route functionality
   markers
-    .on("mouseover", function(e) {
-      e.layer.openPopup();
-    })
-    .on("mouseout", function(e) {
-      e.layer.closePopup();
-    })
     .on("click", function(e) {
-      console.log(e);
-      var position = getPosition();
-      // assemble directions URL based on position of user and selected cafe
-      var startEnd =
-        position.lng +
-        "," +
-        position.lat +
-        ";" +
-        e.latlng.lng +
-        "," +
-        e.latlng.lat;
-      console.log(startEnd);
-      var directionsAPI =
-        "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
-        startEnd +
-        ".json?access_token=" +
-        L.mapbox.accessToken;
+ 
+      // e.layer.closePopup();
 
-      // query for directions and draw the path
-      $.get(directionsAPI, function(data) {
-        var coords = data.routes[0].geometry.coordinates;
-        coords.unshift([position.lng, position.lat]);
-        coords.push([e.latlng.lng, e.latlng.lat]);
-        var path = turf.linestring(coords, {
-          stroke: "#00704A",
-          "stroke-width": 4,
-          opacity: 1
-        });
+      // var feature = e.layer.feature;
+      // var content =
+      //   "<div><strong>" +
+      //   feature.properties.stationName +
+      //   "</strong>" +
+      //   "<p>" +
+      //   feature.properties.description +
+      //   "</p></div>";
 
-        console.log(path);
+      // info.innerHTML = content;
 
-        $(".distance-icon").remove();
-        map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
-        window.setTimeout(function() {
-          $("path").css("stroke-dashoffset", 0);
-        }, 400);
-        var duration = parseInt(data.routes[0].duration / 60);
-        if (duration < 100) {
-          L.marker(
-            [
-              coords[parseInt(coords.length * 0.5)][1],
-              coords[parseInt(coords.length * 0.5)][0]
-            ],
-            {
-              icon: L.divIcon({
-                className: "distance-icon",
-                html:
-                  '<strong style="color:#00704A">' +
-                  duration +
-                  '</strong> <span class="micro">min</span>',
-                iconSize: [45, 23]
-              })
-            }
-          ).addTo(map);
-        }
-      });
+      // var position = getPosition();
+      // // assemble directions URL based on position of user and selected cafe
+      // var startEnd =
+      //   position.lng +
+      //   "," +
+      //   position.lat +
+      //   ";" +
+      //   e.latlng.lng +
+      //   "," +
+      //   e.latlng.lat;
+      // console.log(startEnd);
+      // var directionsAPI =
+      //   "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
+      //   startEnd +
+      //   ".json?access_token=" +
+      //   L.mapbox.accessToken;
+
+      // // query for directions and draw the path
+      // $.get(directionsAPI, function(data) {
+      //   var coords = data.routes[0].geometry.coordinates;
+      //   coords.unshift([position.lng, position.lat]);
+      //   coords.push([e.latlng.lng, e.latlng.lat]);
+      //   var path = turf.linestring(coords, {
+      //     stroke: "#00704A",
+      //     "stroke-width": 4,
+      //     opacity: 1
+      //   });
+
+      //   console.log(path);
+
+      //   $(".distance-icon").remove();
+      //   map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
+      //   window.setTimeout(function() {
+      //     $("path").css("stroke-dashoffset", 0);
+      //   }, 400);
+      //   var duration = parseInt(data.routes[0].duration / 60);
+      //   if (duration < 100) {
+      //     L.marker(
+      //       [
+      //         coords[parseInt(coords.length * 0.5)][1],
+      //         coords[parseInt(coords.length * 0.5)][0]
+      //       ],
+      //       {
+      //         icon: L.divIcon({
+      //           className: "distance-icon",
+      //           html:
+      //             '<strong style="color:#00704A">' +
+      //             duration +
+      //             '</strong> <span class="micro">min</span>',
+      //           iconSize: [45, 23]
+      //         })
+      //       }
+      //     ).addTo(map);
+      //   }
+      // });
     });
 
   marker.on("drag", function() {
@@ -440,7 +448,7 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
         nearest.geometry.coordinates[1]
       ]);
       var path = turf.linestring(coords, {
-        stroke: "#00704A",
+        stroke: "#007bff",
         "stroke-width": 4,
         opacity: 1
       });
@@ -496,11 +504,14 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
               title: title
             }
           );
-          marker2.bindPopup(title);
+          marker2.bindPopup(`<div class='popup-point'>
+          <h1>${title}</h1>
+          <button class="trigger">Say hi</button>
+          </div>`)
           clusterGroup.addLayer(marker2);
         });
       });
-    
+
     map.removeLayer(marker);
     map.removeLayer(bufferLayer);
     map.addLayer(clusterGroup);
@@ -526,10 +537,76 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
     );
   };
 
-  $(document).on("input", "#slider", function(e) {
-    console.log(e);
-    // document.getElementById('autonomy').innerHTML = 'hola';
+  function getMeThere() {
+    alert('hola');
+  }
+
+  $("#map").on("click", ".trigger", function(e) {
+     var markPosition = e.target.value
+     console.log(markPosition.split(','));
+     console.log(markPosition.split(',')[0])
+     console.log(markPosition.split(',')[1])
+     
+     var position = getPosition();
+      // assemble directions URL based on position of user and selected cafe
+      var startEnd =
+        position.lng +
+        "," +
+        position.lat +
+        ";" +
+        markPosition.split(',')[0] +
+        "," +
+       markPosition.split(',')[1];
+      var directionsAPI =
+        "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
+        startEnd +
+        ".json?access_token=" +
+        L.mapbox.accessToken;
+
+      // query for directions and draw the path
+      $.get(directionsAPI, function(data) {
+        var coords = data.routes[0].geometry.coordinates;
+        coords.unshift([position.lng, position.lat]);
+        coords.push([markPosition.split(',')[0],markPosition.split(',')[1]]);
+        var path = turf.linestring(coords, {
+          stroke: "#007bff",
+          "stroke-width": 4,
+          opacity: 1
+        });
+
+        console.log(path);
+
+        $(".distance-icon").remove();
+        map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
+        window.setTimeout(function() {
+          $("path").css("stroke-dashoffset", 0);
+        }, 400);
+        var duration = parseInt(data.routes[0].duration / 60);
+        if (duration < 100) {
+          L.marker(
+            [
+              coords[parseInt(coords.length * 0.5)][1],
+              coords[parseInt(coords.length * 0.5)][0]
+            ],
+            {
+              icon: L.divIcon({
+                className: "distance-icon",
+                html:
+                  '<strong style="color:#00704A">' +
+                  duration +
+                  '</strong> <span class="micro">min</span>',
+                iconSize: [45, 23]
+              })
+            }
+          ).addTo(map);
+        }
+      });
   });
+
+  // $(document).on("input", "#slider", function(e) {
+  //   console.log(e);
+  //   // document.getElementById('autonomy').innerHTML = 'hola';
+  // });
 
   // });
 });

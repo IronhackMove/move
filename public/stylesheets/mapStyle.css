@@ -134,6 +134,20 @@ body {
 .mapbox-directions-origin input {
   font-size: 20px; }
 
+.popup-point {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center; }
+
+.popup-point h1 {
+  font-weight: bold; }
+
+.leaflet-popup-content-wrapper {
+  background: white;
+  border: 1px solid #495aff;
+  border-radius: 10px; }
+
 body {
   font-family: "Dosis", Helvetica, Arial, sans-serif;
   background: #ecf0f1;

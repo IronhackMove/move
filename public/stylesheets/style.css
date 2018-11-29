@@ -24,6 +24,20 @@ a {
   height: 100vh;
   position: relative; }
 
+#inputs {
+  margin-top: 20px; }
+
+.mapbox-directions-origin, .mapbox-directions-destination {
+  margin-bottom: 10px;
+  border-radius: 10px; }
+
+.mapbox-directions-origin, .mapbox-directions-destination {
+  color: white;
+  background: rgba(255, 255, 255, 0); }
+
+#createRoute {
+  margin-top: 10px; }
+
 #right {
   display: flex;
   flex-flow: column;
@@ -31,14 +45,22 @@ a {
   justify-content: center;
   padding: 20px;
   width: 20vw;
-  height: 100vh;
-  background: rgba(224, 224, 224, 0.301); }
+  height: 100vh; }
 
 .titleApp {
   font-size: 100px; }
 
+.nav-right-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 50px; }
+
 .nav-right-buttons button {
-  margin-bottom: 10px; }
+  display: inline-block;
+  border-radius: 60px;
+  box-shadow: 0px 0px 2px #888;
+  padding: 0.5em 0.6em; }
 
 .marker {
   background-image: url("/images/map/epoint.png");
@@ -52,5 +74,11 @@ a {
   display: absolute;
   z-index: 10;
   color: white; }
+
+.round {
+  border-radius: 50%; }
+
+.mapbox-directions-inputs input {
+  font-size: 20px; }
 
 /*# sourceMappingURL=style.css.map */

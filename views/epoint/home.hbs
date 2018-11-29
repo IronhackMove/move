@@ -7,35 +7,40 @@
   <div id="right">
 
     <h1 class="titleApp">MovE</h1>
-    <div class="nav-right-buttons">
-      <button id="findme" class="btn btn-outline-info btn-lg btn-block"><i class="fas fa-map-marked-alt"></i> Find my Car!</button>
-      <button id="getme" class="btn btn-outline-success btn-lg btn-block"><i class="fas fa-charging-station"></i> Nearest station!</button>
-      <button id="route" class="btn btn-outline-warning btn-lg btn-block"><i class="fas fa-route"></i> Create Route</button>
-      <button id="allData" class="btn btn-outline-danger btn-lg btn-block"><i class="fas fa-route"></i> Show All data</button>
-    </div>
 
-    {{!-- <a href="#" id="routePlan">Clear Data</a>
-    <a href="#" id="addData">Add data</a> --}}
-
-    <div id="inputs" class="mapbox-directions-inputs">
-     
-        <div class="mapbox-directions-origin"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-depart-icon"></span></label>
-          <input type="text" required="required" id="mapbox-directions-origin-input" placeholder="Start">
-          <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
-        </div>
-        <div class="mapbox-directions-destination"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-arrive-icon"></span></label><input
-            type="text" required="required" id="mapbox-directions-destination-input" placeholder="End">
-          <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
-        </div>
-          <button id="createRoute" class="btn btn-outline-success btn-lg btn-block">Search</button> 
-   
-    </div>
 
     <div id="value">
       <h1 class="autonomy">50 Km</h1>
     </div>
 
     <input id="slider" type="range" min="0" max="100" step="0.5" value="50">
+
+    <div class="nav-right-buttons">
+      <button id="getme" class="round btn btn-outline-success "><i class="fas fa-charging-station"></i></button>
+      <button id="findme" class="round btn btn-outline-info "><i class="fas fa-crosshairs"></i></button>
+      <button id="route" class="round btn btn-outline-warning "><i class="fas fa-route"></i></button>
+      <button id="allData" class="round btn btn-outline-danger "><i class="far fa-eye"></i></button>
+    </div>
+
+    {{!-- <a href="#" id="routePlan">Clear Data</a>
+    <a href="#" id="addData">Add data</a> --}}
+
+    <div id="inputs" class="mapbox-directions-inputs">
+
+      <div class="mapbox-directions-origin"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-depart-icon"></span></label>
+        <input type="text" required="required" id="mapbox-directions-origin-input" placeholder="Start">
+        <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
+      </div>
+      <div class="mapbox-directions-destination"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-arrive-icon"></span></label><input
+          type="text" required="required" id="mapbox-directions-destination-input" placeholder="End">
+        <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
+      </div>
+      <button id="createRoute" class="btn btn-outline-success btn-lg btn-block">Search</button>
+
+    </div>
+
+    <div id="infoEpoint"></div>
+
 
   </div>
 
