@@ -1,13 +1,13 @@
 $("#inputs").hide();
 
-
-// document.getElementById("route").onclick = function() {
-//   $("#inputs").slideToggle("slow");
-// };
+if (document.getElementById("route") !== null) {
+  document.getElementById("route").onclick = function() {
+    $("#inputs").slideToggle("slow");
+  };  
+};
 
 var info = document.getElementById("infoEpoint");
 
-console.log(token);
 L.mapbox.accessToken = token;
 
 var map = L.mapbox
@@ -70,7 +70,7 @@ function pointBuffer(pt, radius, units, resolution) {
   return turf.polygon([ring]);
 }
 
-axios.get(`https://mov-e.herokuapp.com/move/getPointsOfCharge`).then(points => {
+axios.get(`http://localhost:3000/move/getPointsOfCharge`).then(points => {
 
   var markers = new L.MarkerClusterGroup();
   var clusterGroup = new L.MarkerClusterGroup();
@@ -140,7 +140,9 @@ axios.get(`https://mov-e.herokuapp.com/move/getPointsOfCharge`).then(points => {
         );
         marker2.bindPopup(`<div class='popup-point'>
         <h1>${title}</h1>
-        <button class="trigger btn btn-primary btn-block" value=${[a.geometry.coordinates[0], a.geometry.coordinates[1]]}>Get me there!</button>
+        <button class="triggerFavorite btn" value=${[title, a.geometry.coordinates[0], a.geometry.coordinates[1]]}>Favorite</button>
+        <button class="trigger btn" value=${[a.geometry.coordinates[0], a.geometry.coordinates[1]]}>Get me there!</button>
+       
         </div>`)
         markers.addLayer(marker2);
       }
@@ -422,121 +424,121 @@ axios.get(`https://mov-e.herokuapp.com/move/getPointsOfCharge`).then(points => {
   });
   updateVenues();
 
-  document.querySelector("#getme").onclick = function() {
-    var position = getPosition();
-    // assemble directions URL based on position of user and selected cafe
-    var startEnd =
-      position.lng +
-      "," +
-      position.lat +
-      ";" +
-      nearest.geometry.coordinates[0] +
-      "," +
-      nearest.geometry.coordinates[1];
-    console.log(startEnd);
-    var directionsAPI =
-      "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
-      startEnd +
-      ".json?access_token=" +
-      L.mapbox.accessToken;
-
-    // query for directions and draw the path
-    $.get(directionsAPI, function(data) {
-      var coords = data.routes[0].geometry.coordinates;
-      coords.unshift([position.lng, position.lat]);
-      coords.push([
-        nearest.geometry.coordinates[0],
-        nearest.geometry.coordinates[1]
-      ]);
-      var path = turf.linestring(coords, {
-        stroke: "#007bff",
-        "stroke-width": 4,
-        opacity: 1
-      });
-
-      $(".distance-icon").remove();
-      map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
-      window.setTimeout(function() {
-        $("path").css("stroke-dashoffset", 0);
-      }, 400);
-      var duration = parseInt(data.routes[0].duration / 60);
-      if (duration < 100) {
-        L.marker(
-          [
-            coords[parseInt(coords.length * 0.5)][1],
-            coords[parseInt(coords.length * 0.5)][0]
-          ],
-          {
-            icon: L.divIcon({
-              className: "distance-icon",
-              html:
-                '<strong style="color:#00704A">' +
-                duration +
-                '</strong> <span class="micro">min</span>',
-              iconSize: [45, 23]
-            })
-          }
-        ).addTo(map);
-      }
-    });
-  };
-
-  document.querySelector("#allData").onclick = function() {
-    // map.clearLayers();
-
-    L.mapbox
-      .featureLayer("http://localhost:3000/epoint/getPointsOfCharge")
-      .on("ready", function(e) {
-        // The clusterGroup gets each marker in the group added to it
-        // once loaded, and then is added to the map
-
-        e.target.eachLayer(function(layer) {
-          var title = layer.feature.properties.stationName;
-          var marker2 = L.marker(
-            new L.LatLng(
-              layer.feature.geometry.coordinates[1],
-              layer.feature.geometry.coordinates[0]
-            ),
-            {
-              icon: L.mapbox.marker.icon({
-                "marker-symbol": "car",
-                "marker-color": "#6E6E6E"
-              }),
-              title: title
-            }
-          );
-          marker2.bindPopup(`<div class='popup-point'>
-          <h1>${title}</h1>
-          <button class="trigger">Say hi</button>
-          </div>`)
-          clusterGroup.addLayer(marker2);
+  if (document.querySelector('#getme') !== null) {
+    document.querySelector("#getme").onclick = function() {
+      var position = getPosition();
+      // assemble directions URL based on position of user and selected cafe
+      var startEnd =
+        position.lng +
+        "," +
+        position.lat +
+        ";" +
+        nearest.geometry.coordinates[0] +
+        "," +
+        nearest.geometry.coordinates[1];
+      console.log(startEnd);
+      var directionsAPI =
+        "https://api.tiles.mapbox.com/v4/directions/mapbox.driving/" +
+        startEnd +
+        ".json?access_token=" +
+        L.mapbox.accessToken;
+  
+      // query for directions and draw the path
+      $.get(directionsAPI, function(data) {
+        var coords = data.routes[0].geometry.coordinates;
+        coords.unshift([position.lng, position.lat]);
+        coords.push([
+          nearest.geometry.coordinates[0],
+          nearest.geometry.coordinates[1]
+        ]);
+        var path = turf.linestring(coords, {
+          stroke: "#007bff",
+          "stroke-width": 4,
+          opacity: 1
         });
+  
+        $(".distance-icon").remove();
+        map.fitBounds(map.featureLayer.setGeoJSON(path).getBounds());
+        window.setTimeout(function() {
+          $("path").css("stroke-dashoffset", 0);
+        }, 400);
+        var duration = parseInt(data.routes[0].duration / 60);
+        if (duration < 100) {
+          L.marker(
+            [
+              coords[parseInt(coords.length * 0.5)][1],
+              coords[parseInt(coords.length * 0.5)][0]
+            ],
+            {
+              icon: L.divIcon({
+                className: "distance-icon",
+                html:
+                  '<strong style="color:#00704A">' +
+                  duration +
+                  '</strong> <span class="micro">min</span>',
+                iconSize: [45, 23]
+              })
+            }
+          ).addTo(map);
+        }
       });
+    };
+  }
 
-    map.removeLayer(marker);
-    map.removeLayer(bufferLayer);
-    map.addLayer(clusterGroup);
-  };
-
-  // document.querySelector("#routePlan").onclick = function() {
-  //   clearAllData();
-  // };
-
-  // document.querySelector("#addData").onclick = function() {
-  //   addAllData();
-  // };
-
-  // document.querySelector("#createRoute").onclick = function(e) {
-  //   console.log(
-  //     document.getElementById("mapbox-directions-origin-input").value
-  //   );
-  //   // clearAllData();
-
-  //   addDirection(
-  //     document.getElementById("mapbox-directions-origin-input").value,
-  //     document.getElementById("mapbox-directions-destination-input").value
-  //   );
-  // };
+ 
+  if (document.querySelector("#allData") !== null) {
+    document.querySelector("#allData").onclick = function() {
+      // map.clearLayers();
+  
+      L.mapbox
+        .featureLayer("http://localhost:3000/epoint/getPointsOfCharge")
+        .on("ready", function(e) {
+          // The clusterGroup gets each marker in the group added to it
+          // once loaded, and then is added to the map
+  
+          e.target.eachLayer(function(layer) {
+            var title = layer.feature.properties.stationName;
+            var marker2 = L.marker(
+              new L.LatLng(
+                layer.feature.geometry.coordinates[1],
+                layer.feature.geometry.coordinates[0]
+              ),
+              {
+                icon: L.mapbox.marker.icon({
+                  "marker-symbol": "car",
+                  "marker-color": "#6E6E6E"
+                }),
+                title: title
+              }
+            );
+            marker2.bindPopup(`<div class='popup-point'>
+            <h1>${title}</h1>
+            <button class="trigger">Say hi</button>
+            </div>`)
+            clusterGroup.addLayer(marker2);
+          });
+        });
+  
+      map.removeLayer(marker);
+      map.removeLayer(bufferLayer);
+      map.addLayer(clusterGroup);
+    };
+  }
+ 
+  if (document.querySelector('#createRoute') !== null) {
+    document.querySelector("#createRoute").onclick = function(e) {
+      console.log(
+        document.getElementById("mapbox-directions-origin-input").value
+      );
+      // clearAllData();
+  
+      addDirection(
+        document.getElementById("mapbox-directions-origin-input").value,
+        document.getElementById("mapbox-directions-destination-input").value
+      );
+    };
+  
+  }
 
   function getMeThere() {
     alert('hola');

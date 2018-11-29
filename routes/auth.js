@@ -21,8 +21,8 @@ router.get("/login", (req, res, next) => {
 });
 
 router.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/auth/login",
+  successRedirect: "/move/home",
+  failureRedirect: "/",
   failureFlash: true,
   passReqToCallback: true
 }));
@@ -35,6 +35,7 @@ router.get("/signup", (req, res, next) => {
 router.post("/signup", (req, res, next) => {
   
   if (req.body.models !== '') {
+
     const model = req.body.model;
     const brand = req.body.brand;
     const autonomy = req.body.autonomy;
@@ -91,7 +92,10 @@ router.post("/signup", (req, res, next) => {
 
         newUser.save()
           .then(() => {
-            res.redirect("/");
+            req.login(newUser, function(err) {
+              if (err) { return next(err); }
+              return res.redirect('/move/home');
+            });
           })
       })
       .catch(err => {
@@ -102,6 +106,7 @@ router.post("/signup", (req, res, next) => {
 
 
   } else {
+
     const street = req.body.street;
     const number = req.body.number;
     const cp = req.body.cp;
@@ -189,6 +194,7 @@ router.get(
     }, console.log("Error"));
   }
 );
+
 router.get("/profile/:username", (req, res) => {
   User.findOne({
     username: req.params.username
@@ -197,6 +203,12 @@ router.get("/profile/:username", (req, res) => {
       user
     });
   }, console.log("Error"));
+});
+
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/move/home");
 });
 
 module.exports = router;

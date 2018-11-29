@@ -6,59 +6,68 @@
 
   <div id="right">
 
-    <img href="/" src="/images/LogoMoveColor.svg" class="imgSVG" alt="imagen SVG" title="imagen SVG">
+    <div style="position: absolute">
+      <img href="/" src="/images/LogoMoveColor.svg" class="imgSVG" alt="imagen SVG" title="imagen SVG">
+    </div>
 
-    <div class="slider-form">
-      <div class="">
-        <div class="slider-ctr">
-          <div class="slider">
-            <form class="slider-form slider-one">
-              <h2>Login</h2>
-              <input type="text" class="name" placeholder="User">
-              <input type="password" class="password" placeholder="Password">
-              <br>
-              {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
-              <button class="first next">Next Step</button>
-              <p class="account-message">
-                If you don't have User
-                <a href="/auth/signup">Sing up</a>
+    <div class="right-middle-container">
+      {{#if user}}
+
+      <div id="value">
+        <h1 class="autonomy">50 Km</h1>
+      </div>
+
+      <input id="slider" type="range" min="0" max="100" step="0.5" value="50">
+
+      <div class="nav-right-buttons">
+        <button id="getme" class="round btn btn-outline-success "><i class="fas fa-charging-station"></i></button>
+        <button id="findme" class="round btn btn-outline-info "><i class="fas fa-crosshairs"></i></button>
+        <button id="route" class="round btn btn-outline-warning "><i class="fas fa-route"></i></button>
+        <button id="allData" class="round btn btn-outline-danger "><i class="far fa-eye"></i></button>
+      </div>
+
+      <div id="inputs" class="mapbox-directions-inputs">
+
+        <div class="mapbox-directions-origin"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-depart-icon"></span></label>
+          <input type="text" required="required" id="mapbox-directions-origin-input" placeholder="Start">
+          <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
+        </div>
+        <div class="mapbox-directions-destination"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-arrive-icon"></span></label><input
+            type="text" required="required" id="mapbox-directions-destination-input" placeholder="End">
+          <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
+        </div>
+        <button id="createRoute" class="btn btn-outline-success btn-lg btn-block">Search</button>
+
+      </div>
+
+      {{else}}
+
+      <div class="slider-form">
+        <div class="">
+          <div class="slider-ctr">
+            <div class="slider">
+              <form class="slider-form slider-one" method="POST" action="/auth/login">
+                <h2>Login</h2>
+                <input type="text" name="username" class="name" placeholder="User">
+                <input type="password" name="password" class="password" placeholder="Password">
+                <br>
+                {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
+                <button type="submit" class="first next">Login</button>
+                <p class="account-message">
+                  If you don't have User
+                  <a href="/auth/signup">Sing up</a>
+                </p>
+              </form>
+            </div>
           </div>
         </div>
       </div>
+
+      {{/if}}
     </div>
 
 
-    {{!-- <div>
-      <a href="/"><img href="/" style="color:blue" src="/images/LogoMove.svg" class="imgSVG" alt="imagen SVG" title="imagen SVG"></a>
-    </div>
 
-
-    <div id="value">
-      <h1 class="autonomy">50 Km</h1>
-    </div>
-
-    <input id="slider" type="range" min="0" max="100" step="0.5" value="50"> --}}
-
-    {{!-- <div class="nav-right-buttons">
-      <button id="getme" class="round btn btn-outline-success "><i class="fas fa-charging-station"></i></button>
-      <button id="findme" class="round btn btn-outline-info "><i class="fas fa-crosshairs"></i></button>
-      <button id="route" class="round btn btn-outline-warning "><i class="fas fa-route"></i></button>
-      <button id="allData" class="round btn btn-outline-danger "><i class="far fa-eye"></i></button>
-    </div> --}}
-
-    {{!-- <div id="inputs" class="mapbox-directions-inputs">
-
-      <div class="mapbox-directions-origin"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-depart-icon"></span></label>
-        <input type="text" required="required" id="mapbox-directions-origin-input" placeholder="Start">
-        <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
-      </div>
-      <div class="mapbox-directions-destination"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-arrive-icon"></span></label><input
-          type="text" required="required" id="mapbox-directions-destination-input" placeholder="End">
-        <div class="mapbox-directions-icon mapbox-close-icon" title="Clear value"></div>
-      </div>
-      <button id="createRoute" class="btn btn-outline-success btn-lg btn-block">Search</button>
-
-    </div> --}}
 
 
   </div>

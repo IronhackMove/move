@@ -6,6 +6,17 @@ body {
 a {
   color: #00b7ff; }
 
+#signup-page {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/images/backmap.png");
+  background-size: 100%; }
+
+.backgrey {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(128, 128, 128, 0.657); }
+
 #mainMap {
   overflow: hidden;
   display: flex;
