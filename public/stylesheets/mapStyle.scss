@@ -1,3 +1,9 @@
+@font-face {
+  font-family: Nitti-Bold;
+  src: url(/Type/Nitti-Bold.woff) format('woff');
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -5,6 +11,10 @@ body {
 
 path {
   pointer-events: none;
+}
+
+.menu{
+  font-family: Nitti-Bold;
 }
 
 #map {
@@ -66,9 +76,6 @@ strong {
   border: 2px solid #00704a;
 }
 
-body {
-  font-family: "Lato", sans-serif;
-}
 
 .sidenav {
   height: 100%;
@@ -172,11 +179,9 @@ body {
 
 @import url(https://fonts.googleapis.com/css?family=Dosis:700);
 body {
-  font-family: "Dosis", Helvetica, Arial, sans-serif; 
   background: #ecf0f1;
   color: #34495e;
   padding-top: 40px;
-  text-shadow: white 1px 1px 1px;
 }
 .value {
   display: flex;
