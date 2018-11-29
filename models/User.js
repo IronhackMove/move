@@ -5,7 +5,6 @@ const userSchema = new Schema({
   username: String,
   email: String,
   password: String,
-  img: String, 
   car: [{type: Schema.Types.ObjectId, ref: 'Car'}]
 }, {
   timestamps: {
@@ -16,3 +15,7 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
+
+
+
+         

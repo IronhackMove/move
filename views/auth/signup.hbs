@@ -1,39 +1,111 @@
-<h2>Signup Usuario</h2>
- <br><br>
-<form action="/auth/signup" method="POST" id="form-container">
-  <h3>Register quickly</h3>
-  <button><a href="/auth/car">Login whith Google!</a></button>
-  <br><br><br><br>
 
-  <label for="username">Username</label>
-  <input id="username" type="text" name="username" placeholder="Username">
+<div class="slider-form">
+  <div class="container slider-one-active">
+    <div class="steps">
+      <div class="step step-one">
+        <div class="liner"></div>
+        <span>Sign in</span>
+      </div>
+      <div class="step step-two">
+        <div class="liner"></div>
+        <span>User</span>
+      </div>
+      <div class="step step-three">
+        <div class="liner"></div>
+        <span>Select</span>
+      </div>
 
-  <br><br>
+    </div>
+    <div class="line">
+      <div class="dot-move"></div>
+      <div class="dot zero"></div>
+      <div class="dot center1"></div>
+      <div class="dot full"></div>
+    </div>
+    <div class="slider-ctr">
+      <div class="slider">
 
-  <label for="username">Email</label>
-  <input type="email" name="user_email" placeholder="Add your eMail" required=true>
-  <br><br>
+        <form action="/auth/signup" method="POST">
+          <div class="slider-form slider-one">
+            <h2>Sing up and live the experience</h2>
+            <input type="text" class="name" name="name" placeholder="Creat your user">
+            <input type="email" class="email" name="email" placeholder="Insert your email">
+            <input type="password" class="password" name="password" placeholder="Creat new password">
+             <br>
+              {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
+            <button type="button" class="first next">Next Step</button>
+            <p class="account-message">
+            Do you already have an account?
+            <a href="/auth/login">Login</a>
+          </div>
+          
+          <div class="slider-form slider-two">
+            <h2>Select your identity</h2>
+            <div class="label-ctr">
+              <button type="submit" class="second next" type="button">I'have a Car</button>
+              <button type="submit" class="third next" type="button">Charging point</button>
+            </div>
+          </div>
+              
+          <div class="slider-form slider-three">
 
-  <label for="password">Password</label>
-  <input id="password" type="password" name="password" placeholder="Creat new password" required=true>
-  <br>
-  {{#if message }}
-  <div class="error-message">{{ message }}</div>
-  {{/if}}
+            <h2>Hello, <span class="yourname"></span></h2>
+            <input type="text" class="name" placeholder="What's your name?">
+            <select type="select" class="mixin.blocks" required=true>
+              <option selected value="0">Select an Brands</option>
+              <option value="Tesla">Tesla</option>
+              <option value="Mercedes">Mercedes</option>
+              <option value="BMW">BMW</option>
+              <option value="Audi">Audi</option>
+              <option value="BYD">BYD</option>
+              <option value="Hyundai">Hyundai</option>
+              <option value="Jaguar">Jaguar</option>
+              <option value="Nissan">Nissan</option>
+              <option value="Opel">Opel</option>
+              <option value="Renault">Renault</option>
+              <option value="Volkswagen">Volkswagen</option>
+            </select>
+            <select name="models" required=true>
+              <option selected value="0">Select an Models</option>
+              <option value="Model X">Tesla Model X</option>
+              <option value="Model 3">Tesla Model 3</option>
+              <option value="Model S">Tesla Model S</option>
+              <option value="eq">Mercedes eq</option>
+              <option value="i8">BMW i8</option>
+              <option value="i3">BMW i3</option>
+              <option value="e-tron">Audi e-tron</option>
+              <option value="Kona">Hyundai Kona</option>
+              <option value="Ioniq">Hyundai Ioniq</option>
+              <option value="I-Pace">Jaguar I-Pace</option>
+              <option value="LEAF">Nissan LEAF</option>
+              <option value="Ampera-e">Opel Ampera-e</option>
+            </select>
+            <input type="number" class="name" name="autonomy" placeholder="autonomy">
+            <button type="submit" class="reset" >Finish</button>
+          </div>
+          
+          <div class="slider-form slider-four" style="display: none">
+            <h2>Hello, <span class="yourname"></span></h2>
+            <h2>Add charging points</h2>
+            <input type="text" class="name" placeholder="Address">
+            <input type="number" class="name" placeholder="Number">
+            <input type="number" class="name" placeholder="City">
+            <input type="number" class="name" placeholder="Chargingpoints">
+            <select name="Power" required=true>
+              <option selected value="0">Power KW</option>
+              <option value="1">Normal 3,7kW</option>
+              <option value="1">Fast 7,3kW</option>
+              <option value="2">Very Fast 50kW</option>
+            </select>
+            <a type="submit" class="reset" href="">Finish</a>
+          </div>
+        
+        </form>
+        </div>
+    </div>
+  </div>
 
-  <br>
-
-  <button><a href="/auth/car">GO!</a></button>
-
-    <br><br><br><br>
-
-  <p class="account-message">
-    Do you already have an account?
-    <a href="/auth/login">Login</a>
-  </p>
-  <p class="account-message">
-    If you whant insert one charging point
-    <a href="/auth/signupbussines">Sing in here</a>
-  </p>
-
-</form>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/contact.js"></script>
+</div>

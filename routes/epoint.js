@@ -15,7 +15,4 @@ router.get("/getPointsOfCharge", (req, res, next) => {
   })
 });
 
-
-
-
 module.exports = router;

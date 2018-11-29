@@ -1,0 +1,99 @@
+.imgSVG {
+  height: 3rem;
+  margin: 1rem;
+  color: white;
+}
+
+nav {
+  position: fixed;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.menu {
+  margin-right: 1rem;
+}
+
+a {
+  margin-right: 2rem;
+  color: white;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 2.2rem;
+
+}
+.textintro{
+  color: white;
+}
+
+h3 {
+  font-size:1.7rem;
+  color: linear-gradient(to right, #0acffe 0%, #495aff 100%);
+}
+
+h4 {
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+
+.buttonhome1, .buttonhome2 {
+  height: 4rem;
+  width: 20rem;
+  border-radius: 40px;
+  margin-top: 2rem;
+  font-size: 1.3rem;
+}
+
+
+.imgs1 {
+  width: 100%;
+  height: 800px;
+  background-image: url(/images/img1.jpg);
+  background-repeat: no-repeat;
+  background-size: 100%
+}
+.text1{
+  height: 800px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.buttonhome1 {
+  border: none;
+  background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
+  color: white;
+}
+.imgs2 {
+  width: 100%;
+  height: 700px;
+  background-image: url(/images/img2.jpg);
+  background-repeat: no-repeat;
+  background-size: 100%
+}
+.text2{
+  height: 700px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin-left: 10%;
+  margin-right: 50%;
+}
+
+
+.buttonhome2 {
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+}
+

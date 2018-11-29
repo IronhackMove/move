@@ -1,25 +1,19 @@
 
-<h2>Login</h2>
-
-<form action="/auth/login" method="POST" id="form-container">
-  <label for="username">Username</label>
-  <input id="username" type="text" name="username" placeholder="JonSnow">
-
-  <br><br>
-
-  <label for="password">Password</label>
-  <input id="password" type="password" name="password" placeholder="Your password">
-  <br>
-  {{#if message }}
-    <div class="error-message">{{ message }}</div>
-  {{/if}}
-
-  <br><br>
-
-  <button>Login</button>
-
-  <p class="account-message">
-    Don't have an account yet?
-    <a href="/auth/signup">Signup</a>
-  </p>
-</form>
+<div class="slider-form">
+  <div class="container slider-one-active">
+   <div class="slider-ctr">
+      <div class="slider">
+        <form class="slider-form slider-one">
+         <h2>Login</h2>
+          <input type="text" class="name" placeholder="User">
+          <input type="password" class="password" placeholder="Password">
+           <br>
+           {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
+          <button class="first next">Next Step</button>
+         <p class="account-message">
+         If you don't have User
+         <a href="/auth/login">Sing up</a>
+      </div>
+    </div>
+  </div>
+</div>  
