@@ -15,7 +15,7 @@ const bcryptSalt = 10;
 
 
 router.get("/login", (req, res, next) => {
-  res.render("auth/login", {
+  res.render("epoint/home", {
     "message": req.flash("error")
   });
 });
@@ -33,6 +33,7 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
+  
   if (req.body.models !== '') {
     const model = req.body.model;
     const brand = req.body.brand;

@@ -1,13 +1,14 @@
 $("#inputs").hide();
 
-document.getElementById("route").onclick = function() {
-  $("#inputs").slideToggle("slow");
-};
+
+// document.getElementById("route").onclick = function() {
+//   $("#inputs").slideToggle("slow");
+// };
 
 var info = document.getElementById("infoEpoint");
 
-L.mapbox.accessToken =
-  "pk.eyJ1IjoiYXNvbGVycCIsImEiOiJjam92ejA2ZGYxbWJrM3dwaDA4YmY1eDA2In0.dhk_MNpNlTqubZiObpTOtg";
+console.log(token);
+L.mapbox.accessToken = token;
 
 var map = L.mapbox
   .map("map")
@@ -69,7 +70,7 @@ function pointBuffer(pt, radius, units, resolution) {
   return turf.polygon([ring]);
 }
 
-axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
+axios.get(`http://localhost:3000/move/getPointsOfCharge`).then(points => {
 
   var markers = new L.MarkerClusterGroup();
   var clusterGroup = new L.MarkerClusterGroup();
@@ -525,17 +526,17 @@ axios.get(`http://localhost:3000/epoint/getPointsOfCharge`).then(points => {
   //   addAllData();
   // };
 
-  document.querySelector("#createRoute").onclick = function(e) {
-    console.log(
-      document.getElementById("mapbox-directions-origin-input").value
-    );
-    // clearAllData();
+  // document.querySelector("#createRoute").onclick = function(e) {
+  //   console.log(
+  //     document.getElementById("mapbox-directions-origin-input").value
+  //   );
+  //   // clearAllData();
 
-    addDirection(
-      document.getElementById("mapbox-directions-origin-input").value,
-      document.getElementById("mapbox-directions-destination-input").value
-    );
-  };
+  //   addDirection(
+  //     document.getElementById("mapbox-directions-origin-input").value,
+  //     document.getElementById("mapbox-directions-destination-input").value
+  //   );
+  // };
 
   function getMeThere() {
     alert('hola');

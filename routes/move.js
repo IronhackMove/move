@@ -4,7 +4,7 @@ const router = express.Router();
 const Epoint = require("../models/Epoint");
 
 router.get("/home", (req, res, next) => {
-  res.render("epoint/home");
+  res.render("move/home");
 });
 
 

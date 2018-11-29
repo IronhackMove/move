@@ -16,7 +16,7 @@ a {
   left: 0; }
 
 #container {
-  width: 80vw;
+  width: 75vw;
   height: 100vh; }
 
 #map {
@@ -37,15 +37,6 @@ a {
 
 #createRoute {
   margin-top: 10px; }
-
-#right {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  width: 20vw;
-  height: 100vh; }
 
 .titleApp {
   font-size: 100px; }

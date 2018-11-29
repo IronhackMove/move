@@ -13,6 +13,22 @@ path {
   bottom: 0;
   width: 100%; }
 
+#right {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 20px;
+  width: 25vw;
+  height: 100vh;
+  background: white; }
+
+#right img {
+  margin-top: 40px;
+  height: 110px; }
+
+.slider-form {
+  margin-top: 100px; }
+
 .leaflet-popup-content .marker-title {
   font-weight: 400;
   color: #999;

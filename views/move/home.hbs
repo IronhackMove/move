@@ -6,26 +6,47 @@
 
   <div id="right">
 
-    <h1 class="titleApp">MovE</h1>
+    <img href="/" src="/images/LogoMoveColor.svg" class="imgSVG" alt="imagen SVG" title="imagen SVG">
+
+    <div class="slider-form">
+      <div class="">
+        <div class="slider-ctr">
+          <div class="slider">
+            <form class="slider-form slider-one">
+              <h2>Login</h2>
+              <input type="text" class="name" placeholder="User">
+              <input type="password" class="password" placeholder="Password">
+              <br>
+              {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
+              <button class="first next">Next Step</button>
+              <p class="account-message">
+                If you don't have User
+                <a href="/auth/signup">Sing up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {{!-- <div>
+      <a href="/"><img href="/" style="color:blue" src="/images/LogoMove.svg" class="imgSVG" alt="imagen SVG" title="imagen SVG"></a>
+    </div>
 
 
     <div id="value">
       <h1 class="autonomy">50 Km</h1>
     </div>
 
-    <input id="slider" type="range" min="0" max="100" step="0.5" value="50">
+    <input id="slider" type="range" min="0" max="100" step="0.5" value="50"> --}}
 
-    <div class="nav-right-buttons">
+    {{!-- <div class="nav-right-buttons">
       <button id="getme" class="round btn btn-outline-success "><i class="fas fa-charging-station"></i></button>
       <button id="findme" class="round btn btn-outline-info "><i class="fas fa-crosshairs"></i></button>
       <button id="route" class="round btn btn-outline-warning "><i class="fas fa-route"></i></button>
       <button id="allData" class="round btn btn-outline-danger "><i class="far fa-eye"></i></button>
-    </div>
+    </div> --}}
 
-    {{!-- <a href="#" id="routePlan">Clear Data</a>
-    <a href="#" id="addData">Add data</a> --}}
-
-    <div id="inputs" class="mapbox-directions-inputs">
+    {{!-- <div id="inputs" class="mapbox-directions-inputs">
 
       <div class="mapbox-directions-origin"><label class="mapbox-form-label"><span class="mapbox-directions-icon mapbox-depart-icon"></span></label>
         <input type="text" required="required" id="mapbox-directions-origin-input" placeholder="Start">
@@ -37,9 +58,7 @@
       </div>
       <button id="createRoute" class="btn btn-outline-success btn-lg btn-block">Search</button>
 
-    </div>
-
-    <div id="infoEpoint"></div>
+    </div> --}}
 
 
   </div>
