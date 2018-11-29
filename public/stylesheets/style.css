@@ -1,16 +1,2 @@
-select {
-  font-family: Helvetica, sans-serif;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 15px 20px;
-  background: #fafafa;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  margin-bottom: 50px;
-  font-size: 1rem;
-  position: relative;
-  z-index: 99;
-  border: 1px solid #ddd;
-  height: 60px; }
 
 /*# sourceMappingURL=style.css.map */

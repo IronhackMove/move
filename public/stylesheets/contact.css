@@ -5,7 +5,7 @@
 	font-size: 16px;
 }
 
-h1, h2, h3, p, step{
+h1, h2, h3, p, a, .step{
 	color: black;
 }
 
@@ -29,7 +29,7 @@ button:active,
 }
 
 .container {
-	width: 450px;
+	width: 430px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -83,6 +83,7 @@ button:active,
 	left: 0;
 }
 
+
 .step-two {
 	left: 50%;
 	clip: rect(0, 0px, 25px, 0px);
@@ -96,7 +97,7 @@ button:active,
 .line {
 	width: 100%;
 	height: 5px;
-	background: #ddd;
+	background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 	position: relative;
 	border-radius: 2px;
 	overflow: visible;
@@ -112,7 +113,7 @@ button:active,
 	-webkit-transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	background: #ddd;
+	background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 	border-radius: 2px;
 	-webkit-transition: .3s all ease;
 	transition: .3s all ease;
@@ -124,7 +125,7 @@ button:active,
 	width: 15px;
 	height: 15px;
 	left: 0;
-	background: #ddd;
+	background: white;
 	border-radius: 2px;
 	-webkit-transition: .3s all ease;
 	transition: .3s all ease;
@@ -135,21 +136,22 @@ button:active,
 
 .line .dot.zero {
 	left: 0%;
-	background: #bbb;
+	background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 }
 
 .container.slider-one-active .dot.zero {
-	background: #5892fc;
+	background: white;
 }
 
-.line .dot.center {
+.line .dot.center1 {
 	left: 50%;
-	background: #bbb
+	background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 }
+
 
 .line .dot.full {
 	left: 100%;
-	background: #bbb
+	background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 }
 
 .slider-ctr {
@@ -168,21 +170,32 @@ button:active,
 }
 
 .container.slider-one-active .slider-two,
-.container.slider-one-active .slider-three {
+.container.slider-one-active .slider-three,
+.container.slider-one-active .slider-four {
 	-webkit-transform: scale(.5);
 	-ms-transform: scale(.5);
 	transform: scale(.5);
 }
 
 .container.slider-two-active .slider-one,
-.container.slider-two-active .slider-three {
+.container.slider-two-active .slider-three,
+.container.slider-two-active .slider-four {
 	-webkit-transform: scale(.5);
 	-ms-transform: scale(.5);
 	transform: scale(.5);
 }
 
 .container.slider-three-active .slider-one,
-.container.slider-three-active .slider-two {
+.container.slider-three-active .slider-two,
+.container.slider-three-active .slider-four {
+	-webkit-transform: scale(.5);
+	-ms-transform: scale(.5);
+	transform: scale(.5);
+}
+
+.container.slider-four-active .slider-one,
+.container.slider-four-active .slider-two,
+.container.slider-four-active .slider-three {
 	-webkit-transform: scale(.5);
 	-ms-transform: scale(.5);
 	transform: scale(.5);
@@ -190,7 +203,8 @@ button:active,
 
 .slider-one,
 .slider-two,
-.slider-three {
+.slider-three,
+.slider-four {
 	-webkit-transition: .3s all ease;
 	transition: .3s all ease;
 }
@@ -227,19 +241,23 @@ button:active,
 	text-decoration: none
 }
 
-.slider-form [type="text"],[type="password"],[type="number"] {
+.slider-form [type="text"],[type="password"],[type="number"],[type="email"] {
 	font-family: Helvetica, sans-serif;
-	width: 100%;
 	box-sizing: border-box;
 	padding: 15px 20px;
 	background: #fafafa;
+
 	border: 1px solid transparent;
-	border-radius: 2px;
-	margin-bottom: 50px;
+/***/ border-color: -moz-linear-gradient(top, #0acffe, #495aff);
+	margin-bottom: 20px;
 	font-size: 1rem;
 	position: relative;
 	z-index: 99;
-	border: 1px solid #ddd;
+	
+	width: 100%;
+	height: 4rem;
+	border-radius: 40px;
+	font-size: 1.3rem;
 }
 
 .select {
@@ -260,16 +278,19 @@ button:active,
 .slider-form button,
 .reset {
   display: inline-block;
-  text-decoration: none;
-	background: #5892fc;
+	text-decoration: none;
+	position: relative;
+
+	background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 	border: none;
 	color: white;
-	padding: 10px 25px;
-	font-size: 1rem;
-	border-radius: 2px;
-	cursor: pointer;
-	font-weight: 300;
-	position: relative;
+
+	height: 4rem;
+	width: 20rem;
+	border-radius: 40px;
+	font-size: 1.3rem;
+	margin-top: 2rem;
+	
 }
 
 /*  emot */
@@ -329,7 +350,7 @@ label.radio .emot:before {
 	left: 15px;
 	width: 5px;
 	height: 10px;
-	background: #ddd;
+		background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 }
 
 label.radio .emot:after {
