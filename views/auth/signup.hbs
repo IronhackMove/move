@@ -1,19 +1,19 @@
 <section id="signup-page">
   <div class="backgrey">
     <div class="slider-form">
-      <div class="container slider-one-active">
+      <div class="box container slider-one-active">
         <div class="steps">
           <div class="step step-one">
             <div class="liner"></div>
-            <span>Sign in</span>
+            <span>Registro</span>
           </div>
           <div class="step step-two">
             <div class="liner"></div>
-            <span>User</span>
+            <span>Usuario</span>
           </div>
           <div class="step step-three">
             <div class="liner"></div>
-            <span>Select</span>
+            <span>Car / Point</span>
           </div>
 
         </div>
@@ -28,46 +28,33 @@
 
             <form action="/auth/signup" method="POST">
               <div class="slider-form slider-one">
-                <h2>Sing up and live the experience</h2>
-                <input type="text" class="name" name="user" placeholder="Creat your user">
-                <input type="email" class="email" name="email" placeholder="Insert your email">
-                <input type="password" class="password" name="password" placeholder="Creat new password">
+                <h2>Regístrate<br>¡Vive la experiencia eléctrica!</h2>
+                <input type="text" class="name" name="user" placeholder="Crea nuevo usuario">
+                <input type="email" class="email" name="email" placeholder="Añade tu email">
+                <input type="password" class="password" name="password" placeholder="Crea una contraseña">
                 <br>
                 {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
-                <button type="button" class="first next">Next Step</button>
+                <button type="button" class="first next">Seguimos</button>
                 <p class="account-message">
-                  Do you already have an account?
-                  <a href="/move/home">Login</a>
+                  ¿Registrado?
+                  <a href="/move/home">Loguéate</a>
               </div>
 
               <div class="slider-form slider-two">
-                <h2>Select your identity</h2>
+                <h2>¿Qué quieres hacer?</h2>
                 <div class="label-ctr">
-                  <button type="submit" class="second next" type="button">I'have a Car</button>
-                  <button type="submit" class="third next" type="button">Charging point</button>
+                  <button type="submit" class="second next" type="button">Encuentra</button>
+                  <button type="submit" class="third next" type="button">Añade</button>
+                  <h2>un punto de carga</h2>
                 </div>
               </div>
 
               <div class="slider-form slider-three">
 
-                <h2>Hello, <span class="yourname"></span></h2>
-                <input type="text" class="name" placeholder="What's your name?">
-                <select type="select" class="mixin.blocks" required=true>
-                  <option selected value="0">Select an Brands</option>
-                  <option value="Tesla">Tesla</option>
-                  <option value="Mercedes">Mercedes</option>
-                  <option value="BMW">BMW</option>
-                  <option value="Audi">Audi</option>
-                  <option value="BYD">BYD</option>
-                  <option value="Hyundai">Hyundai</option>
-                  <option value="Jaguar">Jaguar</option>
-                  <option value="Nissan">Nissan</option>
-                  <option value="Opel">Opel</option>
-                  <option value="Renault">Renault</option>
-                  <option value="Volkswagen">Volkswagen</option>
-                </select>
-                <select name="models" required=true>
-                  <option selected value="0">Select an Models</option>
+                <h2>Hola, <span class="yourname"></span></h2>
+               
+                <select class="selectmodel" name="models"  required=true>
+                  <option selected value="0">Selecciona el modelo</option>
                   <option value="Model X">Tesla Model X</option>
                   <option value="Model 3">Tesla Model 3</option>
                   <option value="Model S">Tesla Model S</option>
@@ -81,12 +68,14 @@
                   <option value="LEAF">Nissan LEAF</option>
                   <option value="Ampera-e">Opel Ampera-e</option>
                 </select>
+              
+
                 <input type="number" class="name" name="autonomy" placeholder="autonomy">
                 <button type="submit" class="reset">Finish</button>
               </div>
 
               <div class="slider-form slider-four" style="display: none">
-                <h2>Hello, <span class="yourname"></span></h2>
+                <h2>Hola, <span class="yourname"></span></h2>
                 <h2>Add charging points</h2>
                 <input type="text" class="name" placeholder="Address">
                 <input type="number" class="name" placeholder="Number">

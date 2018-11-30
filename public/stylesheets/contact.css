@@ -1,12 +1,21 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
-@import url(https://fonts.googleapis.com/css?family=Pacifico);
+@font-face {
+  font-family:'Nitti';
+  src: url('/type/Nitti.woff');
+
+}
 
 * {
 	font-size: 16px;
 }
 
-h1, h2, h3, p, a, .step{
+h1, h3, p, a, .step{
 	color: black;
+	font-family: Nitti;
+}
+h2{
+	color: white;
+	font-size: 1.8rem;
+	
 }
 
 input:focus,
@@ -65,6 +74,7 @@ button:active,
 	margin: 0;
 	font-size: .9rem;
 	font-weight: 300;
+	color: white;
 }
 
 .steps > div > .liner {
@@ -101,7 +111,7 @@ button:active,
 	position: relative;
 	border-radius: 2px;
 	overflow: visible;
-	margin-bottom: 50px;
+	margin-bottom: 40px;
 }
 
 .line .dot-move {
@@ -175,6 +185,7 @@ button:active,
 	-webkit-transform: scale(.5);
 	-ms-transform: scale(.5);
 	transform: scale(.5);
+	width: 390px;
 }
 
 .container.slider-two-active .slider-one,
@@ -211,13 +222,14 @@ button:active,
 
 .slider-form {
 	float: left;
-	width: 400px;
+	width: 385px;
 	text-align: center;
 }
 
 
 .slider-form h2 {
-	font-size: 1.5rem;
+	font-family: Nitti;
+
 	font-weight: 300;
 	margin-bottom: 50px;
 	position: relative;
@@ -237,32 +249,35 @@ button:active,
 
 .slider-form h3 .balapa {
 	display: inline-block;
-	color: #5892fc;
+	color: #495aff;
 	text-decoration: none
 }
 
 .slider-form [type="text"],[type="password"],[type="number"],[type="email"] {
-	font-family: Helvetica, sans-serif;
+	font-family: Nitti;
 	box-sizing: border-box;
 	padding: 15px 20px;
 	background: #fafafa;
-	border: 1px solid rgb(21, 86, 192);
-
+	border: 2px solid #495aff;
+	font-weight: 100;
 	margin-bottom: 20px;
-	font-size: 1rem;
 	position: relative;
 	z-index: 99;
 	
-	width: 100%;
+	width: 20rem;
 	height: 4rem;
-	border-radius: 40px;
+	border-radius: 4px;
 	font-size: 1.3rem;
+}
+.placeholder{
+	color: rgb(21, 86, 192)
 }
 
 .select {
-	font-family: Helvetica, sans-serif;
+	font-family: Nitti;
 	width: 100%;
 	box-sizing: border-box;
+	margin-bottom: 20px;
 	background: #fafafa;
 	border: 1px solid transparent;
 	border-radius: 2px;
@@ -276,6 +291,7 @@ button:active,
 
 .slider-form button,
 .reset {
+	font-family: Nitti;
   display: inline-block;
 	text-decoration: none;
 	position: relative;
@@ -349,7 +365,7 @@ label.radio .emot:before {
 	left: 15px;
 	width: 5px;
 	height: 10px;
-		background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
+	background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 }
 
 label.radio .emot:after {
@@ -436,4 +452,43 @@ label.radio .emot .mouth.sad {
 .container.full .step-one .liner,
 .container.full .step-two .liner {
 	width: 100%;
+}
+
+.account-message{
+	font-family: Nitti;
+	color:black;
+}
+
+.box{
+	width: 25vw; 
+	height: 80vh; 
+	padding: 3%;
+	border-radius: 10px;
+	background-image: url(/images/img4.jpg);
+	
+}
+
+::placeholder {
+	color: #495aff;
+	opacity: 1;
+}
+
+.selctedname{
+	box-shadow: 10px 10px 83px -22px rgba(0,0,0,0.75);
+}
+
+::placeholder {
+	color: #495aff;
+	opacity: 1;
+}
+
+.selectmodel{
+  font-family: Nitti;
+  height: 4rem;
+  width: 20rem;
+	margin-bottom: 20px;
+  margin-top: 2rem;
+	font-size: 1.3rem;
+	color: #495aff;
+	border: 2px solid #495aff;
 }

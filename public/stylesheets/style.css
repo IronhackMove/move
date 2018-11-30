@@ -1,10 +1,15 @@
 body {
   padding: 0px;
-  margin: 0px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  margin: 0px;}
 
 a {
   color: #00b7ff; }
+
+.menutype{
+  color: white;
+  font-size: 1.2rem;
+  
+}  
 
 #signup-page {
   width: 100vw;

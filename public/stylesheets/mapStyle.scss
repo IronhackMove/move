@@ -1,20 +1,20 @@
 @font-face {
-  font-family: Nitti-Bold;
-  src: url(/Type/Nitti-Bold.woff) format('woff');
-}
+  font-family:'Nitti';
+  src: url('/type/Nitti.woff');
 
+}
 
 body {
   margin: 0;
   padding: 0;
 }
-
+s
 path {
   pointer-events: none;
 }
 
 .menu{
-  font-family: Nitti-Bold;
+  font-family: Nitti;
 }
 
 #map {
@@ -28,15 +28,12 @@ path {
   display: flex;
   flex-flow: column;
   align-items: center;
-  padding: 20px;
-  width: 25vw;
   height: 100vh;
   background: white;
 }
 
 #right img {
   margin-top: 40px;
-  height: 110px;
 }
 
 .right-middle-container {
@@ -47,15 +44,9 @@ path {
   align-items: center;
 }
 
-.slider-form {
-  margin-top: 100px;
-}
 
 #value {
   margin-top: 100px;
-}
-
-.slider-form input {
 }
 
 .leaflet-popup-content .marker-title {

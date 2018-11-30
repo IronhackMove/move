@@ -7,7 +7,7 @@
   <div id="right">
 
     <div style="position: absolute">
-      <img href="/" src="/images/LogoMoveColor.svg" class="imgSVG" alt="imagen SVG" title="imagen SVG">
+      <a href="/"><img href="/" src="/images/LogoMoveColor.svg" class="imgSVGcolor" alt="imagen SVG" title="imagen SVG"></a>
     </div>
 
     <div class="right-middle-container">
@@ -47,9 +47,9 @@
           <div class="slider-ctr">
             <div class="slider">
               <form class="slider-form slider-one" method="POST" action="/auth/login">
-                <h2>Login</h2>
-                <input type="text" name="username" class="name" placeholder="User">
-                <input type="password" name="password" class="password" placeholder="Password">
+                <h2></h2>
+                <input type="text" name="username" class="name" placeholder="Usuario">
+                <input type="password" name="password" class="password" placeholder="Contraseña">
                 <br>
                 {{#if message }}<div class="error-message">{{ message }}</div>{{/if}}
                 <button type="submit" class="first next">Login</button>

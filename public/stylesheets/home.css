@@ -1,10 +1,18 @@
 @font-face {
-  font-family: Nitti-Bold;
-  src: url(/public/Type/Nitti-Bold.woff) format('woff');
+  font-family:'Nitti';
+  src: url('/type/Nitti.woff');
+
 }
 
 .imgSVG {
   height: 3rem;
+  margin-top: 1.5rem;
+  margin-left: 2rem;
+  color: white;
+}
+
+.imgSVGcolor {
+  height: 5rem;
   margin: 1rem;
   color: white;
 }
@@ -31,33 +39,33 @@ a {
 
 h1 {
   font-size: 2.2rem;
-  font-family: Nitti-Bold;
+  font-family: Nitti;
 }
 .textintro, p{
   color: white;
 }
 
 h3 {
-  font-family: Nitti-Bold;
+  font-family: Nitti;
   font-size:1.7rem;
   color: linear-gradient(to right, #0acffe 0%, #495aff 100%);
 }
 
 h4 {
-  font-family: Nitti-Bold;
+  font-family: Nitti;
   margin-left: 1rem;
   margin-top: 1rem;
 }
 p{
   margin:0px;
   padding-top: 15px;
-  font-family: Nitti-Bold;
+  font-family: Nitti;
   text-align: center;
 }
 
 
 .buttonhome1, .buttonhome2 {
-  font-family: Nitti-Bold;
+  font-family: Nitti;
   height: 4rem;
   width: 20rem;
   border-radius: 40px;
@@ -67,11 +75,7 @@ p{
 
 
 .imgs1 {
-<<<<<<< HEAD
   width: 100vw;
-=======
-  width: 100%;
->>>>>>> 3353346d3647dd05bcbea57427acf7a75588efd8
   height: 100vh;
   background-image: url(/images/img1.jpg);
   background-repeat: no-repeat;
@@ -95,11 +99,7 @@ p{
   color: white;
 }
 .imgs2 {
-<<<<<<< HEAD
   width: 100vw;
-=======
-  width: 100%;
->>>>>>> 3353346d3647dd05bcbea57427acf7a75588efd8
   height: 100vh;
   background-image: url(/images/img2.jpg);
   background-repeat: no-repeat;
@@ -162,7 +162,7 @@ html, body {
   -webkit-transform: translate(0, -50%);
   transform: translate(0, -50%);
   color: #fff;
-  font-family: Nitti-Bold;
+  font-family: Nitti;
   margin-left: -20px;
 }
 
