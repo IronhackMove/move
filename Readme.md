@@ -1,6 +1,6 @@
 # Mov e
 
-Web aplicatoin to find points of charge in Spain.
+Web aplicatoin to find points of charge in Spain for electric vehicles.
 
 ## Web Page
 
